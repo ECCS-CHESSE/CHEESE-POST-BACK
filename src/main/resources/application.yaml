@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:space}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:postgres}
+    hikari:
+      maximum-pool-size: ${DB_MAX_POOL:3}
+      minimum-idle: ${DB_MIN_POOL:1}
+      idle-timeout: ${DB_IDLE_TIMEOUT:60000}
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: ${SERVER_CONTEXT_PATH:/eccs/v1}
+
+logging:
+  pattern:
+    console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){bright_green} %clr(%5p){INFO=green, WARN=yellow, ERROR=red} %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%m){INFO=blue, WARN=yellow, ERROR=bright_red}%n%clr(%wEx){bright_red}'
+  exception-conversion-word: '%clr(%rootException){bright_red}'
+  level:
+    root: ${LOGGING_LEVEL_ROOT:INFO}
+    org.hibernate.SQL: ${LOGGING_LEVEL_SQL:DEBUG}
+    org.hibernate.type.descriptor.sql.Basic.Binder: TRACE
