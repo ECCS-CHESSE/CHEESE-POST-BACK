@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class AuthRequestDto {
     @NotBlank
-    private String user;
+    private String usuario;
     @NotBlank
     private String pass;
 }

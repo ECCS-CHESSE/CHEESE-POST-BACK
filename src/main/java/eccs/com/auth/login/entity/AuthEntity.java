@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "users")
+@Table(name = "eccs_empleado")
 @Data
 public class AuthEntity {
     @Id

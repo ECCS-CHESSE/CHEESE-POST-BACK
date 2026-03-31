@@ -11,6 +11,6 @@ import java.util.Map;
 @Repository
 public interface AuthQuery extends JpaRepository<AuthEntity, Long> {
 
-    @Query(value = "SELECT * FROM users WHERE user = :user AND pass = :pass", nativeQuery = true)
-    Map<String, Object> findByUserAndPass(@Param("user") String user, @Param("pass") String pass);
+    @Query(value = "SELECT * FROM eccs_empleado WHERE usuario = :usuario AND pass = :pass", nativeQuery = true)
+    Map<String, Object> findByUsuarioAndPass(@Param("usuario") String usuario, @Param("pass") String pass);
 }
