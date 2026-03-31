@@ -6,6 +6,7 @@ import eccs.com.core.services.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -22,7 +23,10 @@ public class AuthServiceImpl implements AuthService {
         if (empleado == null || empleado.isEmpty())
             throw new RuntimeException("Credenciales inválidas");
 
-        String token = jwtUtil.generateToken(request.getUsuario(), empleado);
+        Map<String, Object> claims = new HashMap<>();
+        empleado.forEach((k, v) -> claims.put(k, v != null ? v.toString() : null));
+
+        String token = jwtUtil.generateToken(request.getUsuario(), claims);
         return Map.of("token", token, "empleado", empleado);
     }
 }
