@@ -52,11 +52,7 @@ public class SecurityConfig {
             "http://localhost:4200",
             "http://localhost:3000",
             "http://localhost:[4200-4299]",
-            "http://localhost:[3000-3099]",
-            "https://*.eccs.com.mx",
-            "https://siriob-production.up.railway.app",
-            "https://*.railway.app",
-            "https://*.up.railway.app"
+            "http://localhost:[3000-3099]"
         ));
         
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
