@@ -1,29 +1,33 @@
 package eccs.com.modules.controldashboard.sidebar.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import eccs.com.core.dtos.ResponseDto;
+import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controldashboard.sidebar.query.SidebarQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class SidebarServiceImpl implements SidebarService {
 
     private final SidebarQuery sidebarQuery;
-    private final ObjectMapper objectMapper;
+    private final JsonParserMiddleware jsonParserMiddleware;
 
     @Override
-    public Object getMenu(Integer id) {
-        List<Map<String, Object>> rows = sidebarQuery.findMenuByIdEmpleado(id);
-        if (rows.isEmpty()) return rows;
+    public ResponseDto<Object> getMenu(Integer id) {
+        ResponseDto<Object> response = new ResponseDto<>();
         try {
-            String json = (String) rows.get(0).get("app_menu");
-            return objectMapper.readValue(json, Object.class);
+            Object result = jsonParserMiddleware.parseField(sidebarQuery.findMenuByIdEmpleado(id), "app_menu");
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL DASHBOARD - SIDEBAR - MENU");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
         } catch (Exception e) {
-            return rows;
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL DASHBOARD - SIDEBAR - MENU");
+            response.setMensaje("Error al obtener el menú: " + e.getMessage());
+            response.setResponse("Error en el proceso de consulta");
         }
+        return response;
     }
 }

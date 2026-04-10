@@ -21,17 +21,27 @@ eccs/
 ├── src/main/java/eccs/com/
 │   ├── core/                          # Núcleo compartido
 │   │   ├── config/                    # Configuraciones
-│   │   │   ├── DatabaseConfig.java    # Conexión BD con HikariCP
-│   │   │   └── GlobalExceptionHandler.java  # Manejo de errores
+│   │   │   ├── DatabaseConfig.java    # Conexión BD con HikariCP + Bean ObjectMapper
+│   │   │   └── GlobalExceptionHandler.java  # Manejo de errores global
 │   │   ├── cors/                      # Seguridad
-│   │   │   └── SecurityConfig.java    # CORS y Spring Security
+│   │   │   ├── SecurityConfig.java    # CORS, Spring Security y registro de JwtFilter
+│   │   │   └── JwtFilter.java         # Filtro JWT - valida token en rutas protegidas
 │   │   ├── dtos/                      # DTOs compartidos
 │   │   │   └── ResponseDto.java       # Respuesta estándar
+│   │   ├── middleware/                # Middlewares reutilizables entre módulos
+│   │   │   └── JsonParserMiddleware.java  # Parsea campos JSON string de queries nativas
 │   │   └── services/                  # Servicios compartidos
-│   │       └── ResponseService.java   # Generación de PDFs
+│   │       ├── JwtUtil.java           # Generación y validación de tokens JWT
+│   │       └── ResponseService.java   # Respuestas estandarizadas y generación de PDFs
+│   ├── auth/                          # Módulo de autenticación (rutas públicas)
+│   │   ├── login/                     # POST /auth/login
+│   │   └── checkAuthStatus/           # POST /auth/checkAuthStatus
+│   ├── modules/                       # Módulos de negocio (requieren token)
+│   │   └── controldashboard/
+│   │       └── sidebar/               # POST /controldashboard/getMenu/{id}
 │   └── EccsApplication.java           # Clase principal
 ├── src/main/resources/
-│   ├── application.yml                # Configuración
+│   ├── application.yaml               # Configuración
 │   └── banner.txt                     # Banner de inicio
 └── pom.xml                            # Dependencias Maven
 ```
@@ -116,21 +126,37 @@ spring:
 
 ### Configuración Actual
 - **CSRF:** Deshabilitado (API REST)
-- **Autenticación:** Permitir todas las peticiones (sin auth por ahora)
+- **Sesión:** STATELESS (sin sesiones del servidor)
+- **Autenticación:** JWT Bearer Token en header `Authorization`
 - **CORS:** Habilitado para múltiples orígenes
+
+### Rutas Públicas (sin token)
+- `POST /eccs/v1/auth/login`
+- `POST /eccs/v1/auth/checkAuthStatus`
+
+### Rutas Protegidas (requieren token)
+- Cualquier ruta fuera de `/auth/**` → header obligatorio:
+```
+Authorization: Bearer <token>
+```
+
+### Flujo JWT
+```
+Cliente → JwtFilter → valida header Authorization
+       → token válido → continúa
+       → token inválido/ausente → 401 Unauthorized
+```
 
 ### Orígenes Permitidos
 - `http://localhost:4200` - Angular dev
 - `http://localhost:3000` - React dev
-- `https://*.eccs.com.mx` - Producción
-- `https://*.railway.app` - Railway deployments
 
 ### Métodos HTTP Permitidos
 - GET, POST, PUT, DELETE, OPTIONS, PATCH, HEAD
 
 ---
 
-## 📦 Servicios Core
+## 📦 Core
 
 ### ResponseService
 **Funcionalidad:**
@@ -144,6 +170,33 @@ byte[] generatePdfFromJrxml(String JRXML, Map<String, Object> parameters)
 
 // Crea respuesta estándar exitosa
 ResponseEntity<ResponseDto<Object>> ServiceResponse(...)
+```
+
+### JwtUtil
+**Funcionalidad:**
+- Generación y validación de tokens JWT (HS256)
+- Expiración: 8 horas
+
+**Métodos:**
+```java
+// Genera token con claims y subject
+String generateToken(String usuario, Map<String, Object> claims)
+
+// Valida si el token es válido y no expiró
+boolean validateToken(String token)
+```
+
+### JsonParserMiddleware (`core/middleware`)
+**Funcionalidad:**
+- Parsea campos JSON string retornados por funciones nativas de PostgreSQL
+- Reutilizable en cualquier módulo que use `nativeQuery = true`
+
+**Uso:**
+```java
+private final JsonParserMiddleware jsonParserMiddleware;
+
+// Convierte el campo "app_menu" de string a Object JSON
+jsonParserMiddleware.parseField(query.findAlgo(id), "nombre_columna");
 ```
 
 ### GlobalExceptionHandler
@@ -168,9 +221,10 @@ EccsApplication.main()
 ### 2. Petición HTTP
 ```
 Cliente → SecurityConfig (CORS)
-       → Controller (tu código)
-       → Service (lógica de negocio)
-       → Repository/DataSource (BD)
+       → JwtFilter (valida token)
+       → Controller
+       → Service → [JsonParserMiddleware si hay JSON string de BD]
+       → Query/DataSource (BD)
        → ResponseDto (respuesta estándar)
        → Cliente
 ```
@@ -218,10 +272,9 @@ try (Connection conn = dataSource.getConnection()) {
 ## 🔮 Próximos Pasos
 
 ### Para Implementar
-1. **Autenticación JWT** - Ya tienes las dependencias
+1. **Excepciones en GlobalExceptionHandler** - `MethodArgumentNotValidException`, `DataAccessException`, `NoHandlerFoundException`, `AccessDeniedException`
 2. **Endpoints de negocio** - Crear controllers, services, repositories
 3. **Entidades JPA** - Mapear tablas de PostgreSQL
-4. **Validaciones** - Usar `@Valid` en DTOs
 
 ### Dependencias Opcionales (si las necesitas)
 - **Swagger/OpenAPI** - Documentación automática de API
@@ -241,5 +294,5 @@ try (Connection conn = dataSource.getConnection()) {
 
 ---
 
-**Última actualización:** Configuración inicial optimizada
-**Estado:** ✅ Listo para desarrollo
+**Última actualización:** Seguridad JWT + Middleware implementados
+**Estado:** ✅ En desarrollo

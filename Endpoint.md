@@ -28,21 +28,36 @@ Endpoint: POST /login
 ```
 eccs/com/
 ├── core/                             ← compartido (no tocar)
-│   ├── dtos/ResponseDto.java
-│   └── services/ResponseService.java
-└── {modulo}/
-    └── {componente}/
-        ├── dto/
-        │   └── {Componente}RequestDto.java
-        ├── controller/
-        │   └── {Componente}Controller.java
-        ├── service/
-        │   ├── {Componente}Service.java
-        │   └── {Componente}ServiceImpl.java
-        ├── query/
-        │   └── {Componente}Query.java
-        └── entity/
-            └── {Componente}Entity.java
+│   ├── config/
+│   │   ├── DatabaseConfig.java       ← HikariCP + Bean ObjectMapper
+│   │   └── GlobalExceptionHandler.java ← errores globales
+│   ├── cors/
+│   │   ├── SecurityConfig.java       ← CORS + registro JwtFilter
+│   │   └── JwtFilter.java            ← valida token en rutas protegidas
+│   ├── dtos/
+│   │   └── ResponseDto.java
+│   ├── middleware/
+│   │   └── JsonParserMiddleware.java ← parsea JSON string de queries nativas
+│   └── services/
+│       ├── JwtUtil.java              ← genera y valida tokens
+│       └── ResponseService.java      ← respuesta estándar + PDFs
+├── auth/                             ← rutas públicas (sin token)
+│   ├── login/
+│   └── checkAuthStatus/
+└── modules/                          ← rutas protegidas (requieren token)
+    └── {modulo}/
+        └── {componente}/
+            ├── dto/
+            │   └── {Componente}RequestDto.java
+            ├── controller/
+            │   └── {Componente}Controller.java
+            ├── service/
+            │   ├── {Componente}Service.java
+            │   └── {Componente}ServiceImpl.java
+            ├── query/
+            │   └── {Componente}Query.java
+            └── entity/
+                └── {Componente}Entity.java
 ```
 
 ### Package base
@@ -74,7 +89,7 @@ public class {Componente}RequestDto {
 
 ### Controller
 ```java
-package eccs.com.{modulo}.{componente}.controller;
+package eccs.com.modules.{modulo}.{componente}.controller;
 
 @RestController
 @RequestMapping("/{modulo}")
@@ -82,38 +97,52 @@ package eccs.com.{modulo}.{componente}.controller;
 public class {Componente}Controller {
 
     private final {Componente}Service {componente}Service;
-    private final ResponseService responseService;
 
     @PostMapping("/{componente}")
     public ResponseEntity<ResponseDto<Object>> {componente}(@Valid @RequestBody {Componente}RequestDto request) {
-        Object result = {componente}Service.{componente}(request);
-        return responseService.ServiceResponse(new ResponseDto<>(), "Título", "Mensaje", result);
+        return ResponseEntity.ok({componente}Service.{componente}(request));
     }
 }
 ```
 
 ### Interface
 ```java
-package eccs.com.{modulo}.{componente}.service;
+package eccs.com.modules.{modulo}.{componente}.service;
 
 public interface {Componente}Service {
-    Object {componente}({Componente}RequestDto request);
+    ResponseDto<Object> {componente}({Componente}RequestDto request);
 }
 ```
 
 ### Service Impl
 ```java
-package eccs.com.{modulo}.{componente}.service;
+package eccs.com.modules.{modulo}.{componente}.service;
 
 @Service
 @RequiredArgsConstructor
 public class {Componente}ServiceImpl implements {Componente}Service {
 
     private final {Componente}Query {componente}Query;
+    private final JsonParserMiddleware jsonParserMiddleware; // solo si la query retorna JSON string
 
     @Override
-    public Object {componente}({Componente}RequestDto request) {
-        // lógica de negocio aquí
+    public ResponseDto<Object> {componente}({Componente}RequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = {componente}Query.findAlgo(request.getCampo());
+            // con JSON string de PostgreSQL:
+            // Object result = jsonParserMiddleware.parseField({componente}Query.findAlgo(id), "nombre_columna");
+            response.setSuccess(true);
+            response.setTitulo("ECCS - {MODULO} - {COMPONENTE}");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - {MODULO} - {COMPONENTE}");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
     }
 }
 ```
@@ -175,8 +204,11 @@ Endpoint: `POST /eccs/v1/auth/login`
 
 - Siempre `@Valid` en el controller
 - Siempre `@RequiredArgsConstructor` + `final` en lugar de `@Autowired`
-- Siempre `ResponseService.ServiceResponse()` para la respuesta
+- El controller solo hace `ResponseEntity.ok(service.metodo())`, no construye nada
+- El `ServiceImpl` es quien construye el `ResponseDto` con try/catch
 - Queries con `nativeQuery = true` → SQL puro
 - Entity solo necesita `@Id`, no mapear todos los campos
 - `ResponseDto` → `eccs.com.core.dtos`
-- `ResponseService` → `eccs.com.core.services`
+- `JsonParserMiddleware` → `eccs.com.core.middleware` (usar cuando la función PostgreSQL retorne un campo JSON como string)
+- Todos los módulos en `modules/` requieren token JWT → `Authorization: Bearer <token>`
+- Las rutas públicas solo viven en `auth/`

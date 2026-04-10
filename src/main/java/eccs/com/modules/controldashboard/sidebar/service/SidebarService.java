@@ -1,5 +1,7 @@
 package eccs.com.modules.controldashboard.sidebar.service;
 
+import eccs.com.core.dtos.ResponseDto;
+
 public interface SidebarService {
-    Object getMenu(Integer id);
+    ResponseDto<Object> getMenu(Integer id);
 }
