@@ -1,5 +1,6 @@
 package eccs.com.core.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +30,11 @@ public class DatabaseConfig {
 
     @Value("${spring.datasource.hikari.minimum-idle:2}")
     private int minIdle;
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
     /**
      * Crea el DataSource con HikariCP
