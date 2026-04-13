@@ -22,4 +22,22 @@ public class JsonParserMiddleware {
             return rows;
         }
     }
+
+    /**
+     * Usar cuando PostgreSQL retorna el resultado dentro de un campo
+     * cuyo nombre es igual al de la función, por ejemplo:
+     *
+     * "response": [{ "fn_get_data_empresa": "{...json...}" }]
+     *
+     * Toma el primer (y único) campo del primer row y lo parsea a Object.
+     */
+    public Object parseFunction(List<Map<String, Object>> rows) {
+        if (rows.isEmpty()) return rows;
+        try {
+            String json = (String) rows.get(0).values().iterator().next();
+            return objectMapper.readValue(json, Object.class);
+        } catch (Exception e) {
+            return rows;
+        }
+    }
 }

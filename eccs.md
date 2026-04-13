@@ -190,14 +190,27 @@ boolean validateToken(String token)
 **Funcionalidad:**
 - Parsea campos JSON string retornados por funciones nativas de PostgreSQL
 - Reutilizable en cualquier módulo que use `nativeQuery = true`
+- Dos métodos según cómo retorne el campo la función PostgreSQL
 
-**Uso:**
+**Métodos:**
 ```java
 private final JsonParserMiddleware jsonParserMiddleware;
 
-// Convierte el campo "app_menu" de string a Object JSON
+// Usar cuando el campo JSON tiene un nombre conocido y diferente al de la función
+// Ejemplo: la función retorna { "app_menu": "{...json...}" }
 jsonParserMiddleware.parseField(query.findAlgo(id), "nombre_columna");
+
+// Usar cuando el campo JSON tiene el mismo nombre que la función PostgreSQL
+// Ejemplo: la función retorna { "fn_get_data_empresa": "{...json...}" }
+jsonParserMiddleware.parseFunction(query.findAlgo());
 ```
+
+**¿Cuál usar?**
+
+| Caso | Método |
+|---|---|
+| Campo con nombre conocido (ej. `app_menu`) | `parseField(rows, "nombre_columna")` |
+| Campo con nombre igual a la función (ej. `fn_get_data_empresa`) | `parseFunction(rows)` |
 
 ### GlobalExceptionHandler
 **Maneja:**
@@ -294,5 +307,5 @@ try (Connection conn = dataSource.getConnection()) {
 
 ---
 
-**Última actualización:** Seguridad JWT + Middleware implementados
+**Última actualización:** Módulo controlempresa/empresa + parseFunction en JsonParserMiddleware
 **Estado:** ✅ En desarrollo

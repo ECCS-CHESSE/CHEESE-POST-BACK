@@ -12,6 +12,11 @@ Todos los cambios notables del proyecto ECCS serán documentados en este archivo
 ### ✅ Configuración Completada
 - Terminamos configuración de la app, iniciamos con desarrollo
 
+### ✅ Agregado - Módulo controlempresa
+- Componente `empresa` con endpoint `POST /eccs/v1/controlempresa/empresa/data`
+- Ejecuta función PostgreSQL `"controlempresa".fn_get_data_empresa()`
+- Parseo de campo JSON string con `JsonParserMiddleware`
+
 ---
 
 ## Tipos de Cambios

@@ -130,8 +130,10 @@ public class {Componente}ServiceImpl implements {Componente}Service {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = {componente}Query.findAlgo(request.getCampo());
-            // con JSON string de PostgreSQL:
+            // con JSON string - campo nombre conocido (ej. "app_menu"):
             // Object result = jsonParserMiddleware.parseField({componente}Query.findAlgo(id), "nombre_columna");
+            // con JSON string - campo con nombre igual a la función PostgreSQL (ej. "fn_get_data_empresa"):
+            // Object result = jsonParserMiddleware.parseFunction({componente}Query.findAlgo());
             response.setSuccess(true);
             response.setTitulo("ECCS - {MODULO} - {COMPONENTE}");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
@@ -200,6 +202,35 @@ Endpoint: `POST /eccs/v1/auth/login`
 
 ---
 
+## Módulos Implementados
+
+### controlempresa / empresa
+
+**Input usado:**
+```
+En modulo controlempresa agrega componente empresa
+DTO: no hay
+Endpoint: POST /empresa/data
+Función PostgreSQL: SELECT * FROM "controlempresa".fn_get_data_empresa()
+```
+
+**Archivos generados en** `eccs/com/modules/controlempresa/empresa/`:
+
+| Archivo | Ruta |
+|---|---|
+| EmpresaController.java | `controller/` |
+| EmpresaService.java | `service/` |
+| EmpresaServiceImpl.java | `service/` |
+| EmpresaQuery.java | `query/` |
+| EmpresaEntity.java | `entity/` |
+
+Endpoint: `POST /eccs/v1/controlempresa/empresa/data`
+
+**Notas:**
+- Usa `jsonParserMiddleware.parseFunction(rows)` → el campo retornado tiene el mismo nombre que la función: `"fn_get_data_empresa"`
+
+---
+
 ## Notas
 
 - Siempre `@Valid` en el controller
@@ -209,6 +240,8 @@ Endpoint: `POST /eccs/v1/auth/login`
 - Queries con `nativeQuery = true` → SQL puro
 - Entity solo necesita `@Id`, no mapear todos los campos
 - `ResponseDto` → `eccs.com.core.dtos`
-- `JsonParserMiddleware` → `eccs.com.core.middleware` (usar cuando la función PostgreSQL retorne un campo JSON como string)
+- `JsonParserMiddleware` → `eccs.com.core.middleware` — dos métodos disponibles:
+  - `parseField(rows, "nombre_columna")` → cuando el campo JSON tiene nombre conocido
+  - `parseFunction(rows)` → cuando el campo JSON tiene el mismo nombre que la función PostgreSQL
 - Todos los módulos en `modules/` requieren token JWT → `Authorization: Bearer <token>`
 - Las rutas públicas solo viven en `auth/`
