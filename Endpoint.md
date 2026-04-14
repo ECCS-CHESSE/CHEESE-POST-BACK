@@ -227,7 +227,36 @@ Función PostgreSQL: SELECT * FROM "controlempresa".fn_get_data_empresa()
 Endpoint: `POST /eccs/v1/controlempresa/empresa/data`
 
 **Notas:**
+- Sin DTO (no recibe body)
 - Usa `jsonParserMiddleware.parseFunction(rows)` → el campo retornado tiene el mismo nombre que la función: `"fn_get_data_empresa"`
+
+---
+
+### controlventas / catalogo-clientes
+
+**Input usado:**
+```
+En modulo controlventas agrega componente catalogo-clientes
+DTO: no hay
+Endpoint: POST /catalogo/clientes
+Función PostgreSQL: SELECT * FROM "controlventas".fn_get_catalogo_clientes()
+```
+
+**Archivos generados en** `eccs/com/modules/controlventas/catalogoclientes/`:
+
+| Archivo | Ruta |
+|---|---|
+| CatalogoClientesController.java | `controller/` |
+| CatalogoClientesService.java | `service/` |
+| CatalogoClientesServiceImpl.java | `service/` |
+| CatalogoClientesQuery.java | `query/` |
+| CatalogoClientesEntity.java | `entity/` |
+
+Endpoint: `POST /eccs/v1/controlventas/catalogo/clientes`
+
+**Notas:**
+- Sin DTO (no recibe body)
+- Usa `jsonParserMiddleware.parseFunction(rows)` → el campo retornado tiene el mismo nombre que la función: `"fn_get_catalogo_clientes"`
 
 ---
 

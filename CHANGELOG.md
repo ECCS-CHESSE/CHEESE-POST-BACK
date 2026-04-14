@@ -15,7 +15,15 @@ Todos los cambios notables del proyecto ECCS serán documentados en este archivo
 ### ✅ Agregado - Módulo controlempresa
 - Componente `empresa` con endpoint `POST /eccs/v1/controlempresa/empresa/data`
 - Ejecuta función PostgreSQL `"controlempresa".fn_get_data_empresa()`
-- Parseo de campo JSON string con `JsonParserMiddleware`
+- Parseo de campo JSON string con `JsonParserMiddleware.parseFunction()`
+
+### ✅ Agregado - Core JsonParserMiddleware
+- Nuevo método `parseFunction(rows)` para cuando el campo JSON tiene el mismo nombre que la función PostgreSQL
+
+### ✅ Agregado - Módulo controlventas
+- Componente `catalogo-clientes` con endpoint `POST /eccs/v1/controlventas/catalogo/clientes`
+- Ejecuta función PostgreSQL `"controlventas".fn_get_catalogo_clientes()`
+- Parseo de campo JSON string con `JsonParserMiddleware.parseFunction()`
 
 ---
 
