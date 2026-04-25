@@ -34,7 +34,11 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(
                 org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/checkAuthStatus").permitAll()
+                .requestMatchers(
+                    "/auth/login", 
+                    "/controlsync/login", 
+                    "/auth/checkAuthStatus"
+                ).permitAll()
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

@@ -12,6 +12,6 @@ import java.util.Map;
 @Repository
 public interface LoginQuery extends JpaRepository<LoginEntity, Long> {
 
-    @Query(value = "SELECT * FROM \"controlsync\".fn_login(:usuario, :pass)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"controlauth\".fn_login(:usuario, :pass)", nativeQuery = true)
     List<Map<String, Object>> findByLogin(@Param("usuario") String usuario, @Param("pass") String pass);
 }
