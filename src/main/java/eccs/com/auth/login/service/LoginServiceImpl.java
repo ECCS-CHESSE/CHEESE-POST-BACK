@@ -1,29 +1,28 @@
-package eccs.com.modules.controlsync.login.service;
+package eccs.com.auth.login.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eccs.com.modules.controlsync.login.dto.LoginRequestDto;
-import eccs.com.modules.controlsync.login.dto.LoginResponseDto;
-import eccs.com.modules.controlsync.login.query.LoginQuery;
+import eccs.com.auth.login.dto.AuthRequestDto;
+import eccs.com.auth.login.dto.LoginResponseDto;
+import eccs.com.auth.login.query.AuthQuery;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.core.services.JwtUtil;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class LoginServiceImpl implements LoginService {
+public class LoginServiceImpl implements AuthService {
 
-    private final LoginQuery loginQuery;
+    private final AuthQuery loginQuery;
     private final JwtUtil jwtUtil;
     private final JsonParserMiddleware jsonParserMiddleware;
     private final ObjectMapper objectMapper;
 
     @Override
-    public Object login(LoginRequestDto request) {
+    public Object login(AuthRequestDto request) {
         List<Map<String, Object>> rows = loginQuery.findByLogin(request.getUsuario(), request.getPass());
 
         if (rows == null || rows.isEmpty())

@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
 public interface AuthQuery extends JpaRepository<AuthEntity, Long> {
 
-    @Query(value = "SELECT * FROM eccs_empleado WHERE usuario = :usuario AND pass = :pass", nativeQuery = true)
-    Map<String, Object> findByUsuarioAndPass(@Param("usuario") String usuario, @Param("pass") String pass);
+    @Query(value = "SELECT * FROM \"controlauth\".fn_login(:usuario, :pass)", nativeQuery = true)
+    List<Map<String, Object>> findByLogin(@Param("usuario") String usuario, @Param("pass") String pass);
 }
