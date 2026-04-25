@@ -35,8 +35,12 @@ public class LoginServiceImpl implements AuthService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id_eccs_empleado", result.getUsuario().getId_eccs_empleado());
+        claims.put("id_estatus_empleado", result.getUsuario().getId_estatus_empleado());
+        claims.put("eccs_estatus", result.getUsuario().getEccs_estatus());
+        claims.put("id_eccs_sucursal", result.getUsuario().getId_eccs_sucursal());
+        claims.put("id_eccs_sucursal_domicilio", result.getUsuario().getId_eccs_sucursal_domicilio());
         claims.put("empleado", result.getUsuario().getEmpleado());
-        claims.put("estatus", result.getUsuario().getEstatus());
+        claims.put("eccs_url", result.getUsuario().getEccs_url());
 
         String token = jwtUtil.generateToken(request.getUsuario(), claims);
         return Map.of("token", token, "empleado", result);
