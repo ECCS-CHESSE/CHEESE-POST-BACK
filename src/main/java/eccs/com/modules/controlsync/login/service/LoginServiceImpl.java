@@ -1,6 +1,8 @@
 package eccs.com.modules.controlsync.login.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eccs.com.modules.controlsync.login.dto.LoginRequestDto;
+import eccs.com.modules.controlsync.login.dto.LoginResponseDto;
 import eccs.com.modules.controlsync.login.query.LoginQuery;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.core.services.JwtUtil;
@@ -18,6 +20,7 @@ public class LoginServiceImpl implements LoginService {
     private final LoginQuery loginQuery;
     private final JwtUtil jwtUtil;
     private final JsonParserMiddleware jsonParserMiddleware;
+    private final ObjectMapper objectMapper;
 
     @Override
     public Object login(LoginRequestDto request) {
@@ -26,12 +29,17 @@ public class LoginServiceImpl implements LoginService {
         if (rows == null || rows.isEmpty())
             throw new RuntimeException("Credenciales inválidas");
 
-        Object empleado = jsonParserMiddleware.parseFunction(rows);
+        LoginResponseDto result = objectMapper.convertValue(jsonParserMiddleware.parseFunction(rows), LoginResponseDto.class);
+
+        if (!result.isSuccess() || result.getUsuario() == null)
+            return Map.of("success", false, "mensaje", result.getMensaje());
 
         Map<String, Object> claims = new HashMap<>();
-        rows.get(0).forEach((k, v) -> claims.put(k, v != null ? v.toString() : null));
+        claims.put("id_eccs_empleado", result.getUsuario().getId_eccs_empleado());
+        claims.put("empleado", result.getUsuario().getEmpleado());
+        claims.put("estatus", result.getUsuario().getEstatus());
 
         String token = jwtUtil.generateToken(request.getUsuario(), claims);
-        return Map.of("token", token, "empleado", empleado);
+        return Map.of("token", token, "empleado", result);
     }
 }
