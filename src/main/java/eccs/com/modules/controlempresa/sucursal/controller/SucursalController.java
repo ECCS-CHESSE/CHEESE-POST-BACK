@@ -19,4 +19,9 @@ public class SucursalController {
     public ResponseEntity<ResponseDto<Object>> createSucursal(@Valid @RequestBody CreateSucursalRequestDto request) {
         return ResponseEntity.ok(sucursalService.createSucursal(request));
     }
+
+    @DeleteMapping("/sucursal/delete/{id}")
+    public ResponseEntity<ResponseDto<Object>> deleteSucursal(@PathVariable int id) {
+        return ResponseEntity.ok(sucursalService.deleteSucursal(id));
+    }
 }

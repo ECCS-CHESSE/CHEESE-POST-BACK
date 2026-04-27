@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,6 +27,19 @@ public class GlobalExceptionHandler {
      * Maneja errores cuando el body del request está vacío o mal formado
      * Ejemplo: JSON inválido, campos faltantes
      */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ResponseDto<Object>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        logger.error("Data integrity error: {}", ex.getMessage());
+
+        ResponseDto<Object> response = new ResponseDto<>();
+        response.setSuccess(false);
+        response.setTitulo("ECCS - ERROR EN LA SOLICITUD");
+        response.setMensaje("No es posible eliminar este registro porque tiene información relacionada que depende de él");
+        response.setResponse(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDto<Object>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         Map<String, String> errores = new java.util.LinkedHashMap<>();

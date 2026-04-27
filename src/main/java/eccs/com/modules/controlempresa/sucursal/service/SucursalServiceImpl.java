@@ -31,4 +31,15 @@ public class SucursalServiceImpl implements SucursalService {
         }
         return response;
     }
+
+    @Override
+    public ResponseDto<Object> deleteSucursal(int id) {
+        sucursalQuery.deleteSucursal(id);
+        ResponseDto<Object> response = new ResponseDto<>();
+        response.setSuccess(true);
+        response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
+        response.setMensaje("SUCURSAL ELIMINADA DE MANERA EXITOSA");
+        response.setResponse(null);
+        return response;
+    }
 }

@@ -260,6 +260,24 @@ Endpoint: `POST /eccs/v1/controlventas/catalogo/clientes`
 
 ---
 
+### controlempresa / sucursal
+
+#### DELETE - Eliminar Sucursal
+
+**Endpoint:** `DELETE /eccs/v1/controlempresa/sucursal/delete/{id}`
+
+**Path param:**
+| Param | Tipo | Requerido |
+|---|---|---|
+| id | int | ✅ |
+
+**Query ejecutado:**
+```sql
+DELETE FROM eccs_sucursal WHERE id = :id
+```
+
+---
+
 ## Notas
 
 - Siempre `@Valid` en el controller
