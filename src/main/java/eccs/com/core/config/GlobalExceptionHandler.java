@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Map;
 
 import eccs.com.core.dtos.ResponseDto;
 
@@ -23,6 +26,21 @@ public class GlobalExceptionHandler {
      * Maneja errores cuando el body del request está vacío o mal formado
      * Ejemplo: JSON inválido, campos faltantes
      */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ResponseDto<Object>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errores = new java.util.LinkedHashMap<>();
+        ex.getBindingResult().getFieldErrors()
+                .forEach(e -> errores.put(e.getField(), e.getDefaultMessage()));
+
+        ResponseDto<Object> response = new ResponseDto<>();
+        response.setSuccess(false);
+        response.setTitulo("ECCS - ERROR EN LA SOLICITUD");
+        response.setMensaje("Validation failed");
+        response.setResponse(errores);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ResponseDto<Object>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         logger.error("Request body error: {}", ex.getMessage());
