@@ -2,6 +2,7 @@ package eccs.com.modules.controlempresa.sucursal.controller;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlempresa.sucursal.dto.CreateSucursalRequestDto;
+import eccs.com.modules.controlempresa.sucursal.dto.UpdateSucursalRequestDto;
 import eccs.com.modules.controlempresa.sucursal.service.SucursalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class SucursalController {
     @PostMapping("/sucursal/create")
     public ResponseEntity<ResponseDto<Object>> createSucursal(@Valid @RequestBody CreateSucursalRequestDto request) {
         return ResponseEntity.ok(sucursalService.createSucursal(request));
+    }
+
+    @PutMapping("/sucursal/update")
+    public ResponseEntity<ResponseDto<Object>> updateSucursal(@Valid @RequestBody UpdateSucursalRequestDto request) {
+        return ResponseEntity.ok(sucursalService.updateSucursal(request));
     }
 
     @DeleteMapping("/sucursal/delete/{id}")

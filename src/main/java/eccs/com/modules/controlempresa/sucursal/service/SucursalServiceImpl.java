@@ -3,6 +3,7 @@ package eccs.com.modules.controlempresa.sucursal.service;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlempresa.sucursal.dto.CreateSucursalRequestDto;
+import eccs.com.modules.controlempresa.sucursal.dto.UpdateSucursalRequestDto;
 import eccs.com.modules.controlempresa.sucursal.query.SucursalQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,13 +34,31 @@ public class SucursalServiceImpl implements SucursalService {
     }
 
     @Override
+    public ResponseDto<Object> updateSucursal(UpdateSucursalRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(sucursalQuery.updateSucursal(request.getId_sucursal(), request.getSucursal()));
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
+            response.setMensaje("SUCURSAL ACTUALIZADA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
     public ResponseDto<Object> deleteSucursal(int id) {
         sucursalQuery.deleteSucursal(id);
         ResponseDto<Object> response = new ResponseDto<>();
         response.setSuccess(true);
         response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
         response.setMensaje("SUCURSAL ELIMINADA DE MANERA EXITOSA");
-        response.setResponse(null);
+        response.setResponse(id);
         return response;
     }
 }

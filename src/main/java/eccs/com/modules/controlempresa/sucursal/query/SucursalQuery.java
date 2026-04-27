@@ -17,6 +17,9 @@ public interface SucursalQuery extends JpaRepository<SucursalEntity, Long> {
     @Query(value = "SELECT * FROM \"controlempresa\".fn_create_sucursal(:sucursal)", nativeQuery = true)
     List<Map<String, Object>> createSucursal(@Param("sucursal") String sucursal);
 
+    @Query(value = "SELECT * FROM \"controlempresa\".fn_update_sucursal(:idSucursal, :sucursal)", nativeQuery = true)
+    List<Map<String, Object>> updateSucursal(@Param("idSucursal") int idSucursal, @Param("sucursal") String sucursal);
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM eccs_sucursal WHERE id = :id", nativeQuery = true)
