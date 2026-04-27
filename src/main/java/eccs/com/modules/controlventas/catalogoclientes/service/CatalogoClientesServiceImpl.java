@@ -2,6 +2,7 @@ package eccs.com.modules.controlventas.catalogoclientes.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
+import eccs.com.modules.controlventas.catalogoclientes.dto.CatalogoClientesRequestDto;
 import eccs.com.modules.controlventas.catalogoclientes.query.CatalogoClientesQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,10 @@ public class CatalogoClientesServiceImpl implements CatalogoClientesService {
      * cuyo nombre es igual al de la función usando parseFunction.
      */
     @Override
-    public ResponseDto<Object> getCatalogoClientes() {
+    public ResponseDto<Object> getCatalogoClientes(CatalogoClientesRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
-            // parseFunction extrae el JSON string del campo "fn_get_catalogo_clientes" automáticamente
-            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getCatalogoClientes());
+            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getCatalogoClientes(request.getId_estatus()));
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
