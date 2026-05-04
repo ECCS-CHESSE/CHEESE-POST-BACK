@@ -15,7 +15,8 @@ import java.util.Map;
 public class JwtUtil {
 
     private final Key key;
-    private final long EXPIRATION = 1000 * 60 * 60 * 6; // 6 horas
+    @Value("${jwt.expiration}")
+    private long EXPIRATION;
 
     public JwtUtil(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));

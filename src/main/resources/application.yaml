@@ -27,6 +27,7 @@ server:
 
 jwt:
   secret: ${JWT_SECRET:3c7a9f2e1b4d6e8f0a2c4e6f8b0d2f4a6c8e0f2b4d6a8c0e2f4b6d8a0c2e4f6}
+  expiration: ${JWT_EXPIRATION:28800000}
 
 logging:
   pattern:
