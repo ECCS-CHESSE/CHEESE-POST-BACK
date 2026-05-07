@@ -21,12 +21,12 @@ public class SucursalController {
         return ResponseEntity.ok(sucursalService.createSucursal(request));
     }
 
-    @PutMapping("/sucursal/update")
+    @PostMapping("/sucursal/update")
     public ResponseEntity<ResponseDto<Object>> updateSucursal(@Valid @RequestBody UpdateSucursalRequestDto request) {
         return ResponseEntity.ok(sucursalService.updateSucursal(request));
     }
 
-    @DeleteMapping("/sucursal/delete/{id}")
+    @PostMapping("/sucursal/delete/{id}")
     public ResponseEntity<ResponseDto<Object>> deleteSucursal(@PathVariable int id) {
         return ResponseEntity.ok(sucursalService.deleteSucursal(id));
     }

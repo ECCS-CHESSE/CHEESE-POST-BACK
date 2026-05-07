@@ -5,6 +5,8 @@ import lombok.Data;
 
 @Data
 public class CatalogoClientesRequestDto {
+    @NotNull(message = "id_sucursal es requerido")
+    private Integer id_sucursal;
     @NotNull(message = "id_estatus es requerido")
     private Integer id_estatus;
 }

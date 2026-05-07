@@ -32,10 +32,11 @@ public class JsonParserMiddleware {
      * Toma el primer (y único) campo del primer row y lo parsea a Object.
      */
     public Object parseFunction(List<Map<String, Object>> rows) {
-        if (rows.isEmpty()) return rows;
+        if (rows.isEmpty() || rows.get(0) == null) return null;
         try {
-            String json = (String) rows.get(0).values().iterator().next();
-            return objectMapper.readValue(json, Object.class);
+            Object value = rows.get(0).values().iterator().next();
+            if (value == null) return null;
+            return objectMapper.readValue((String) value, Object.class);
         } catch (Exception e) {
             return rows;
         }

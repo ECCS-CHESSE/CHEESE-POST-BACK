@@ -24,7 +24,7 @@ public class CatalogoClientesServiceImpl implements CatalogoClientesService {
     public ResponseDto<Object> getCatalogoClientes(CatalogoClientesRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
-            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getCatalogoClientes(request.getId_estatus()));
+            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getCatalogoClientes(request));
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
