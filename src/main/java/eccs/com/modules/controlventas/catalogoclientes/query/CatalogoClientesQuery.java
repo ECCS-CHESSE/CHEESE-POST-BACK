@@ -15,4 +15,21 @@ public interface CatalogoClientesQuery extends JpaRepository<CatalogoClientesEnt
 
     @Query(value = "SELECT * FROM \"controlventas\".fn_get_catalogo_clientes(:#{#request.id_sucursal}, :#{#request.id_estatus})", nativeQuery = true)
     List<Map<String, Object>> getCatalogoClientes(@Param("request") CatalogoClientesRequestDto request);
+
+    @Query(value = "select\r\n" + //
+                "    id , descripcion\r\n" + //
+                "from eccs_estatus\r\n" + //
+                "where activo is true\r\n" + //
+                "and id in ( 1,2,3 )\r\n" + //
+                "order by id", nativeQuery = true)
+    List<Map<String, Object>> getLstEstatus();
+
+    @Query(value = "select\r\n" + //
+                "    id, descripcion\r\n" + //
+                "from eccs_sucursal\r\n" + //
+                "where id_estatus = 1\r\n" + //
+                "and activo is true order by descripcion", nativeQuery = true)
+    List<Map<String, Object>> getLstSucursales();
+
+
 }

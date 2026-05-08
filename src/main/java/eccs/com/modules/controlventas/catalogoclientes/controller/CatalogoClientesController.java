@@ -19,4 +19,15 @@ public class CatalogoClientesController {
     public ResponseEntity<ResponseDto<Object>> getCatalogoClientes(@Valid @RequestBody CatalogoClientesRequestDto request) {
         return ResponseEntity.ok(catalogoClientesService.getCatalogoClientes(request));
     }
+
+    @PostMapping("/lst/estatus")
+    public ResponseEntity<ResponseDto<Object>> getlstEstatus() {
+        return ResponseEntity.ok(catalogoClientesService.getLstEstatus());
+    }
+
+    @PostMapping("/lst/sucursales")
+    public ResponseEntity<ResponseDto<Object>> getlstSucursales() {
+        return ResponseEntity.ok(catalogoClientesService.getLstSucursales());
+    }
+
 }

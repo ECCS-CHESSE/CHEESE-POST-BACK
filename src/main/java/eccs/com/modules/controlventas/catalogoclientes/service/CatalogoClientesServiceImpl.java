@@ -37,4 +37,44 @@ public class CatalogoClientesServiceImpl implements CatalogoClientesService {
         }
         return response;
     }
+
+    @Override
+    public ResponseDto<Object> getLstSucursales() {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getLstSucursales());
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getLstEstatus() {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(catalogoClientesQuery.getLstEstatus());
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CATALOGO CLIENTES");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+
+
+    
 }
