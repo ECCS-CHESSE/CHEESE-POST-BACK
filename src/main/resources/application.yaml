@@ -29,6 +29,18 @@ jwt:
   secret: ${JWT_SECRET:3c7a9f2e1b4d6e8f0a2c4e6f8b0d2f4a6c8e0f2b4d6a8c0e2f4b6d8a0c2e4f6}
   expiration: ${JWT_EXPIRATION:28800000}
 
+sync:
+  scheduler:
+    enabled: ${SYNC_SCHEDULER_ENABLED:false}
+  sql:
+    path: ${SYNC_SQL_PATH:C:/app/sync.sql}
+    procesados: ${SYNC_SQL_PROCESADOS:C:/app/procesados/}
+  prod:
+    url: ${SYNC_PROD_URL:http://localhost:8080/eccs/v1/api/sync/import}
+
+sucursal:
+  id: ${SUCURSAL_ID:0}
+
 logging:
   pattern:
     console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){bright_green} %clr(%5p){INFO=green, WARN=yellow, ERROR=red} %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%m){INFO=blue, WARN=yellow, ERROR=bright_red}%n%clr(%wEx){bright_red}'
