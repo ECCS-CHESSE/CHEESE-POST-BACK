@@ -69,8 +69,7 @@ public class SyncScheduler {
 
     private boolean hayInternet() {
         try {
-            InetAddress.getByName("8.8.8.8").isReachable(2000);
-            return true;
+            return InetAddress.getByName("8.8.8.8").isReachable(2000);
         } catch (Exception e) {
             return false;
         }
