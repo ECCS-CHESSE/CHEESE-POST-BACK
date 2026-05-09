@@ -16,6 +16,24 @@ public class SucursalServiceImpl implements SucursalService {
     private final JsonParserMiddleware jsonParserMiddleware;
 
     @Override
+    public ResponseDto<Object> getSucursal(int id) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(sucursalQuery.getSucursal(id));
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
+            response.setMensaje("SUCURSAL CREADA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL EMPRESA - SUCURSAL");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
     public ResponseDto<Object> createSucursal(CreateSucursalRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {

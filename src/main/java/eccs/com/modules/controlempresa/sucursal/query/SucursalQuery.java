@@ -14,6 +14,9 @@ import java.util.Map;
 @Repository
 public interface SucursalQuery extends JpaRepository<SucursalEntity, Long> {
 
+    @Query(value = "SELECT * FROM \"controlempresa\".fn_get_data_sucursal(:id)", nativeQuery = true)
+    List<Map<String, Object>> getSucursal(@Param("id") int id);
+
     @Query(value = "SELECT * FROM \"controlempresa\".fn_create_sucursal(:sucursal)", nativeQuery = true)
     List<Map<String, Object>> createSucursal(@Param("sucursal") String sucursal);
 
