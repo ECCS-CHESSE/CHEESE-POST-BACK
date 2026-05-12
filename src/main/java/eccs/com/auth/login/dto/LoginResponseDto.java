@@ -17,5 +17,6 @@ public class LoginResponseDto {
         private Long id_eccs_sucursal_domicilio;
         private String empleado;
         private String eccs_url;     
+        private Boolean requiereNip;     
     }
 }
