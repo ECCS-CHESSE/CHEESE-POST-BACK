@@ -232,6 +232,40 @@ Endpoint: `POST /eccs/v1/controlempresa/empresa/data`
 
 ---
 
+### controlventas / cortes
+
+**Archivos generados en** `eccs/com/modules/controlventas/cortes/`:
+
+| Archivo | Ruta |
+|---|---|
+| AbrirCorteRequestDto.java | `dto/` |
+| CortesController.java | `controller/` |
+| CortesService.java | `service/` |
+| CortesServiceImpl.java | `service/` |
+| CortesQuery.java | `query/` |
+| CortesEntity.java | `entity/` |
+
+#### POST - Abrir Corte
+
+Endpoint: `POST /eccs/v1/controlventas/cortes/abrir`
+
+**Body:**
+```json
+{
+  "id_eccs_sucursal": 1,
+  "id_eccs_empleado": 2,
+  "monto": 500.000000
+}
+```
+
+**Función PostgreSQL:** `"controlventas".fn_abrir_nuevo_eccs_cortes(_id_eccs_sucursal, _id_eccs_empleado, _monto)`
+
+**Notas:**
+- Usa `jsonParserMiddleware.parseFunction(rows)`
+- Futuros endpoints (ej. cerrar corte) se agregan en `CortesController` y `CortesService`
+
+---
+
 ### controlventas / catalogo-clientes
 
 **Input usado:**
