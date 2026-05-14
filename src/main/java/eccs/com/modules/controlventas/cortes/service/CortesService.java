@@ -4,5 +4,5 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlventas.cortes.dto.AbrirCorteRequestDto;
 
 public interface CortesService {
-    ResponseDto<Object> abrirCorte(AbrirCorteRequestDto request);
+    public ResponseDto<Object> abrirCorte(AbrirCorteRequestDto request);
 }
