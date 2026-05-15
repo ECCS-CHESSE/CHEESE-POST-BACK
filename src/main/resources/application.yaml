@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST:eccs-cheesepizza.csbwzfd0zlqm.us-east-2.rds.amazonaws.com}:${DB_PORT:5432}/${DB_NAME:EccsCheesePizza}
-    username: ${DB_USER:eccsadmin}
-    password: ${DB_PASS:s2580Dev}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     hikari:
-      maximum-pool-size: ${DB_MAX_POOL:3}
-      minimum-idle: ${DB_MIN_POOL:1}
-      idle-timeout: ${DB_IDLE_TIMEOUT:60000}
+      maximum-pool-size: ${DB_MAX_POOL}
+      minimum-idle: ${DB_MIN_POOL}
+      idle-timeout: ${DB_IDLE_TIMEOUT}
       connection-timeout: 30000
   jpa:
     hibernate:
@@ -21,31 +21,31 @@ spring:
       enabled: ALWAYS
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${SERVER_PORT}
   servlet:
-    context-path: ${SERVER_CONTEXT_PATH:/eccs/v1}
+    context-path: ${SERVER_CONTEXT_PATH}
 
 jwt:
-  secret: ${JWT_SECRET:3c7a9f2e1b4d6e8f0a2c4e6f8b0d2f4a6c8e0f2b4d6a8c0e2f4b6d8a0c2e4f6}
-  expiration: ${JWT_EXPIRATION:28800000}
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION}
 
 sync:
   scheduler:
-    enabled: ${SYNC_SCHEDULER_ENABLED:false}
+    enabled: ${SYNC_SCHEDULER_ENABLED}
   sql:
-    path: ${SYNC_SQL_PATH:C:/app/sync.sql}
-    procesados: ${SYNC_SQL_PROCESADOS:C:/app/procesados/}
+    path: ${SYNC_SQL_PATH}
+    procesados: ${SYNC_SQL_PROCESADOS}
   prod:
-    url: ${SYNC_PROD_URL:http://localhost:8080/eccs/v1/api/sync/import}
+    url: ${SYNC_PROD_URL}
 
 sucursal:
-  id: ${SUCURSAL_ID:0}
+  id: ${SUCURSAL_ID}
 
 logging:
   pattern:
     console: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){bright_green} %clr(%5p){INFO=green, WARN=yellow, ERROR=red} %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){blue} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%m){INFO=blue, WARN=yellow, ERROR=bright_red}%n%clr(%wEx){bright_red}'
   exception-conversion-word: '%clr(%rootException){bright_red}'
   level:
-    root: ${LOGGING_LEVEL_ROOT:INFO}
+    root: ${LOGGING_LEVEL_ROOT}
     org.hibernate.SQL: OFF
     org.hibernate.type.descriptor.sql.Basic.Binder: TRACE
