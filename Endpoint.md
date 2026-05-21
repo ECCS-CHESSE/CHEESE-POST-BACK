@@ -312,7 +312,39 @@ DELETE FROM eccs_sucursal WHERE id = :id
 
 ---
 
-## Notas
+### controlventas / comprobante-venta
+
+**Archivos generados en** `eccs/com/modules/controlventas/comprobanteventa/`:
+
+| Archivo | Ruta |
+|---|---|
+| ComprobanteVentaRequestDto.java | `dto/` |
+| ComprobanteVentaController.java | `controller/` |
+| ComprobanteVentaService.java | `service/` |
+| ComprobanteVentaServiceImpl.java | `service/` |
+| ComprobanteVentaQuery.java | `query/` |
+| ComprobanteVentaEntity.java | `entity/` |
+
+#### POST - Crear Comprobante Venta
+
+Endpoint: `POST /eccs/v1/controlventas/comprobante/venta/create`
+
+**Body:**
+```json
+{
+  "id_eccs_sucursal": 1,
+  "id_empleado": 2,
+  "id_eccs_cliente": 3,
+  "id_eccs_cliente_domicilio": 4
+}
+```
+
+**Función PostgreSQL:** `"controlventas".fn_create_comprobante_venta(_id_eccs_sucursal, _id_empleado, _id_eccs_cliente, _id_eccs_cliente_domicilio)`
+
+**Notas:**
+- Usa `jsonParserMiddleware.parseFunction(rows)`
+
+---
 
 - Siempre `@Valid` en el controller
 - Siempre `@RequiredArgsConstructor` + `final` en lugar de `@Autowired`
