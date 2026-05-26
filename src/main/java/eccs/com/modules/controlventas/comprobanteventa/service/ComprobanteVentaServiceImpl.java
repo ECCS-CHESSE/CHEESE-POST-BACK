@@ -21,9 +21,9 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
             Object result = jsonParserMiddleware.parseFunction(
                 comprobanteVentaQuery.createComprobanteVenta(
                     request.getId_eccs_sucursal(),
-                    request.getId_empleado(),
                     request.getId_eccs_cliente(),
-                    request.getId_eccs_cliente_domicilio()
+                    request.getId_eccs_empleado(),
+                    request.getId_eccs_tipo_comprobante()
                 )
             );
             response.setSuccess(true);

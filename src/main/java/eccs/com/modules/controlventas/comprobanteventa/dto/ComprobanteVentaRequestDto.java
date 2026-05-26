@@ -8,9 +8,9 @@ public class ComprobanteVentaRequestDto {
     @NotNull
     private Integer id_eccs_sucursal;
     @NotNull
-    private Integer id_empleado;
-    @NotNull
     private Integer id_eccs_cliente;
     @NotNull
-    private Integer id_eccs_cliente_domicilio;
+    private Integer id_eccs_empleado;
+    @NotNull
+    private Integer id_eccs_tipo_comprobante;
 }

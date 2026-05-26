@@ -12,12 +12,12 @@ import java.util.Map;
 @Repository
 public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEntity, Long> {
 
-    @Query(value = "SELECT * FROM \"controlventas\".fn_create_comprobante_venta(:idSucursal, :idEmpleado, :idCliente, :idClienteDomicilio)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"controlventas\".fn_create_comprobante_venta(:idSucursal, :idEmpleado, :idCliente, :idTipoComprobante)", nativeQuery = true)
     List<Map<String, Object>> createComprobanteVenta(
         @Param("idSucursal")         Integer idSucursal,
-        @Param("idEmpleado")         Integer idEmpleado,
         @Param("idCliente")          Integer idCliente,
-        @Param("idClienteDomicilio") Integer idClienteDomicilio
+        @Param("idEmpleado")         Integer idEmpleado,
+        @Param("idTipoComprobante") Integer idTipoComprobante
     );
 
 }
