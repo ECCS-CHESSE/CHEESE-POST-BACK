@@ -12,6 +12,7 @@ public class LoginResponseDto {
     public static class UsuarioDto {
         private Long id_eccs_empleado;
         private Long id_estatus_empleado;
+        private Long id_eccs_cliente;
         private String eccs_estatus;
         private Long id_eccs_sucursal;
         private Long id_eccs_sucursal_domicilio;

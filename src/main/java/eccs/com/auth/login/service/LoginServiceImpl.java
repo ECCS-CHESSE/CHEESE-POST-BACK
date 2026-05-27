@@ -35,6 +35,7 @@ public class LoginServiceImpl implements AuthService {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("id_eccs_empleado", result.getUsuario().getId_eccs_empleado());
+        claims.put("id_eccs_cliente", result.getUsuario().getId_eccs_cliente());
         claims.put("id_estatus_empleado", result.getUsuario().getId_estatus_empleado());
         claims.put("eccs_estatus", result.getUsuario().getEccs_estatus());
         claims.put("id_eccs_sucursal", result.getUsuario().getId_eccs_sucursal());
