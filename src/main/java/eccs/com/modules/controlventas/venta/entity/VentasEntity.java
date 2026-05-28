@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.cortes.entity;
+package eccs.com.modules.controlventas.venta.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

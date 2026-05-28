@@ -9,7 +9,7 @@ public class CrearVentaRequestDto {
     @NotNull private Integer id_eccs_sucursal;
     @NotNull private Integer id_eccs_cliente;
     @NotNull private Integer id_eccs_empleado;
-    @NotNull private Integer id_eccs_tipo_comprobante;
+    @NotNull private Integer id_eccs_tipo_pedido;
 
 
 }
