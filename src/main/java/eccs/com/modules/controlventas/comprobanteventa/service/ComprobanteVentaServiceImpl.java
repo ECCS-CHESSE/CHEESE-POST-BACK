@@ -14,6 +14,27 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
     private final ComprobanteVentaQuery comprobanteVentaQuery;
     private final JsonParserMiddleware jsonParserMiddleware;
 
+     @Override
+    public ResponseDto<Object> getData(int IdSucursal, int IdComprobante) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.getData( IdSucursal, IdComprobante)
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA");
+            response.setMensaje("COMPROBANTE DATA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+
     @Override
     public ResponseDto<Object> createComprobanteVenta(ComprobanteVentaRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();

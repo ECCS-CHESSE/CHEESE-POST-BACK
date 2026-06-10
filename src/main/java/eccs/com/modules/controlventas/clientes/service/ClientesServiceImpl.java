@@ -23,6 +23,7 @@ public class ClientesServiceImpl implements ClientesService {
         try {
             Object result = jsonParserMiddleware.parseFunction(
                 clientesQuery.getCrearCliente(
+                    request.getId(),
                     request.getId_sucursal(),
                     request.getId_empleado(),
                     request.getNombre(),
