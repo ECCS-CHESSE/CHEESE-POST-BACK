@@ -26,4 +26,13 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("idComprobante")         Integer idComprobante
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_agregar_eccs_productos_pizzas_venta(:idSucursal, :idVenta, :idEmpleado, :producto, :precio)", nativeQuery = true)
+    List<Map<String, Object>> agregarProducto(
+        @Param("idSucursal")  Integer idSucursal,
+        @Param("idVenta")     Integer idVenta,
+        @Param("idEmpleado")  Integer idEmpleado,
+        @Param("producto")    Integer producto,
+        @Param("precio")      Integer precio
+    );
+
 }

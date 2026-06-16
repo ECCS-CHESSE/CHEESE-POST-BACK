@@ -3,6 +3,7 @@ package eccs.com.modules.controlventas.comprobanteventa.service;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.query.ComprobanteVentaQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,32 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> agregarProducto(AgregarProductoRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.agregarProducto(
+                    request.getId_sucursal(),
+                    request.getId_venta(),
+                    request.getId_empleado(),
+                    request.getProducto(),
+                    request.getPrecio()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - AGREGAR PRODUCTO");
+            response.setMensaje("PRODUCTO AGREGADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - AGREGAR PRODUCTO");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

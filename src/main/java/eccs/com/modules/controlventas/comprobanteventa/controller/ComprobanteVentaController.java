@@ -2,6 +2,7 @@ package eccs.com.modules.controlventas.comprobanteventa.controller;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.service.ComprobanteVentaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,15 @@ public class ComprobanteVentaController {
         @PathVariable Integer IdComprobante) {
         return ResponseEntity.ok(comprobanteVentaService.getData(IdSucursal, IdComprobante));
     }
+
     @PostMapping("/venta/create")
     public ResponseEntity<ResponseDto<Object>> createComprobanteVenta(@Valid @RequestBody ComprobanteVentaRequestDto request) {
         return ResponseEntity.ok(comprobanteVentaService.createComprobanteVenta(request));
+    }
+
+    @PostMapping("/producto/agregar")
+    public ResponseEntity<ResponseDto<Object>> agregarProducto(@Valid @RequestBody AgregarProductoRequestDto request) {
+        return ResponseEntity.ok(comprobanteVentaService.agregarProducto(request));
     }
 
 }
