@@ -17,10 +17,24 @@ public class ComprobanteVentaController {
     private final ComprobanteVentaService comprobanteVentaService;
 
     @PostMapping("/venta/data/{IdSucursal}/{IdComprobante}")
-    public ResponseEntity<ResponseDto<Object>> Data(
+    public ResponseEntity<ResponseDto<Object>> getData(
         @PathVariable Integer IdSucursal, 
         @PathVariable Integer IdComprobante) {
         return ResponseEntity.ok(comprobanteVentaService.getData(IdSucursal, IdComprobante));
+    }
+  
+    @PostMapping("/venta/producto/eliminar/{IdSucursal}/{Id}")
+    public ResponseEntity<ResponseDto<Object>> getEliminarProducto(
+        @PathVariable Integer IdSucursal, 
+        @PathVariable Integer Id) {
+        return ResponseEntity.ok(comprobanteVentaService.getEliminarProducto(IdSucursal, Id));
+    }
+  
+    @PostMapping("/ventadetalle/data/{IdSucursal}/{IdComprobante}")
+    public ResponseEntity<ResponseDto<Object>> getDataDetallle(
+        @PathVariable Integer IdSucursal, 
+        @PathVariable Integer IdComprobante) {
+        return ResponseEntity.ok(comprobanteVentaService.getDataDetalle(IdSucursal, IdComprobante));
     }
 
     @PostMapping("/venta/create")

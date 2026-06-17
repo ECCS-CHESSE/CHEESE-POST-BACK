@@ -15,7 +15,7 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
     private final ComprobanteVentaQuery comprobanteVentaQuery;
     private final JsonParserMiddleware jsonParserMiddleware;
 
-     @Override
+    @Override
     public ResponseDto<Object> getData(int IdSucursal, int IdComprobante) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
@@ -29,6 +29,46 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getDataDetalle(int IdSucursal, int IdComprobante) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.getDataDetalle( IdSucursal, IdComprobante)
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA DETALLE");
+            response.setMensaje("COMPROBANTE DATA DETALLE");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA DETALLE");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getEliminarProducto(int IdSucursal, int Id) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.getEliminarProducto( IdSucursal, Id)
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA DETALLE");
+            response.setMensaje("COMPROBANTE DATA DETALLE");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - COMPROBANTE VENTA DETALLE");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

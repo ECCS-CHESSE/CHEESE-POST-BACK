@@ -20,6 +20,18 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("idTipoComprobante") Integer idTipoComprobante
     );
   
+    @Query(value = "SELECT * FROM \"controlventas\".fn_get_data_comprobante_ventas_info(:idSucursal, :idComprobante )", nativeQuery = true)
+    List<Map<String, Object>> getDataDetalle(
+        @Param("idSucursal")         Integer idSucursal,
+        @Param("idComprobante")         Integer idComprobante
+    );
+ 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_eliminar_producto_comprobante_ventas_info(:idSucursal, :id )", nativeQuery = true)
+    List<Map<String, Object>> getEliminarProducto(
+        @Param("idSucursal")         Integer idSucursal,
+        @Param("id")         Integer id
+    );
+
     @Query(value = "SELECT * FROM \"controlventas\".fn_get_data_comprobante_ventas(:idSucursal, :idComprobante )", nativeQuery = true)
     List<Map<String, Object>> getData(
         @Param("idSucursal")         Integer idSucursal,
