@@ -127,4 +127,24 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         return response;
     }
 
+    @Override
+    public ResponseDto<Object> cancelarComprobanteVenta(int idSucursal, int id) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.cancelarComprobanteVenta(idSucursal, id)
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CANCELAR COMPROBANTE");
+            response.setMensaje("COMPROBANTE CANCELADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CANCELAR COMPROBANTE");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
 }

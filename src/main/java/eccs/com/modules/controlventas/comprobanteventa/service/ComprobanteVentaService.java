@@ -10,4 +10,5 @@ public interface ComprobanteVentaService {
     ResponseDto<Object> getEliminarProducto(int IdSucursal, int Id);
     ResponseDto<Object> createComprobanteVenta(ComprobanteVentaRequestDto request);
     ResponseDto<Object> agregarProducto(AgregarProductoRequestDto request);
+    ResponseDto<Object> cancelarComprobanteVenta(int idSucursal, int id);
 }

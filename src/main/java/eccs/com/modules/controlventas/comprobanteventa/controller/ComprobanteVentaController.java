@@ -47,4 +47,11 @@ public class ComprobanteVentaController {
         return ResponseEntity.ok(comprobanteVentaService.agregarProducto(request));
     }
 
+    @PostMapping("/venta/cancelar/{IdSucursal}/{Id}")
+    public ResponseEntity<ResponseDto<Object>> cancelarComprobanteVenta(
+        @PathVariable Integer IdSucursal,
+        @PathVariable Integer Id) {
+        return ResponseEntity.ok(comprobanteVentaService.cancelarComprobanteVenta(IdSucursal, Id));
+    }
+
 }
