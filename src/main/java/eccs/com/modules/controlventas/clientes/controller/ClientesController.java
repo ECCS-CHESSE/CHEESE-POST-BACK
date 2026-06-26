@@ -2,6 +2,8 @@ package eccs.com.modules.controlventas.clientes.controller;
 
 import eccs.com.modules.controlventas.clientes.dto.ClientesBuscarRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesCrearRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesCrearDomicilioRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesActualizarDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.service.ClientesService;
 import eccs.com.core.dtos.ResponseDto;
@@ -30,5 +32,15 @@ public class ClientesController {
     @PostMapping("/cliente/domicilio")
     public ResponseEntity<ResponseDto<Object>> domicilioCliente(@Valid @RequestBody ClientesDomicilioRequestDto request) {
         return ResponseEntity.ok(clientesService.getDomicilioCliente(request));
+    }
+
+    @PostMapping("/cliente/domicilio/crear")
+    public ResponseEntity<ResponseDto<Object>> crearDomicilioCliente(@Valid @RequestBody ClientesCrearDomicilioRequestDto request) {
+        return ResponseEntity.ok(clientesService.getCrearDomicilioCliente(request));
+    }
+
+    @PostMapping("/cliente/domicilio/actualizar")
+    public ResponseEntity<ResponseDto<Object>> actualizarDomicilioCliente(@Valid @RequestBody ClientesActualizarDomicilioRequestDto request) {
+        return ResponseEntity.ok(clientesService.getActualizarDomicilioCliente(request));
     }
 }

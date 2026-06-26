@@ -31,4 +31,30 @@ public interface ClientesQuery extends JpaRepository<CatalogoClientesEntity, Lon
         @Param("idCliente") Integer idCliente
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_get_create_eccs_cliente_domicilio(:id, :tel, :calle, :cp, :fraccionamiento, :referencia, :entrecalles, :idEmpleado, :idSucursal)", nativeQuery = true)
+    List<Map<String, Object>> getCrearDomicilioCliente(
+        @Param("id") Integer id,
+        @Param("tel") String tel,
+        @Param("calle") String calle,
+        @Param("cp") String cp,
+        @Param("fraccionamiento") String fraccionamiento,
+        @Param("referencia") String referencia,
+        @Param("entrecalles") String entrecalles,
+        @Param("idEmpleado") Integer idEmpleado,
+        @Param("idSucursal") Integer idSucursal
+    );
+
+    @Query(value = "SELECT * FROM \"controlventas\".fn_get_update_eccs_cliente_domicilio(:id, :tel, :calle, :cp, :fraccionamiento, :referencia, :entrecalles, :idEmpleado, :idSucursal)", nativeQuery = true)
+    List<Map<String, Object>> getActualizarDomicilioCliente(
+        @Param("id") Integer id,
+        @Param("tel") String tel,
+        @Param("calle") String calle,
+        @Param("cp") String cp,
+        @Param("fraccionamiento") String fraccionamiento,
+        @Param("referencia") String referencia,
+        @Param("entrecalles") String entrecalles,
+        @Param("idEmpleado") Integer idEmpleado,
+        @Param("idSucursal") Integer idSucursal
+    );
+
 }
