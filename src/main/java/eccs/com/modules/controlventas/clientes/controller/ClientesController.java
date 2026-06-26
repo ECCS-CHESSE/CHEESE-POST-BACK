@@ -2,6 +2,7 @@ package eccs.com.modules.controlventas.clientes.controller;
 
 import eccs.com.modules.controlventas.clientes.dto.ClientesBuscarRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesCrearRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.service.ClientesService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -24,5 +25,10 @@ public class ClientesController {
     @PostMapping("/cliente/buscar")
     public ResponseEntity<ResponseDto<Object>> buscarCliente(@Valid @RequestBody ClientesBuscarRequestDto request) {
         return ResponseEntity.ok(clientesService.getBusquedaCliente(request));
+    }
+
+    @PostMapping("/cliente/domicilio")
+    public ResponseEntity<ResponseDto<Object>> domicilioCliente(@Valid @RequestBody ClientesDomicilioRequestDto request) {
+        return ResponseEntity.ok(clientesService.getDomicilioCliente(request));
     }
 }

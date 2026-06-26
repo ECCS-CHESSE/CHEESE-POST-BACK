@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlventas.clientes.dto.ClientesBuscarRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesCrearRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.query.ClientesQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,26 @@ public class ClientesServiceImpl implements ClientesService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - BUSCAR");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getDomicilioCliente(ClientesDomicilioRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                clientesQuery.getDomicilioCliente(request.getId_eccs_cliente())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - DOMICILIO");
+            response.setMensaje("DOMICILIO OBTENIDO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - DOMICILIO");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

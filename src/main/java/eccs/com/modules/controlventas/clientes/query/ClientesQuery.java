@@ -26,4 +26,9 @@ public interface ClientesQuery extends JpaRepository<CatalogoClientesEntity, Lon
         @Param("descripcion") String descripcion
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_get_data_eccs_cliente_domicilio(:idCliente)", nativeQuery = true)
+    List<Map<String, Object>> getDomicilioCliente(
+        @Param("idCliente") Integer idCliente
+    );
+
 }
