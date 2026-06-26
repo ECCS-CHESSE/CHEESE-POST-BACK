@@ -30,8 +30,6 @@ public class ClientesServiceImpl implements ClientesService {
                     request.getId_sucursal(),
                     request.getId_empleado(),
                     request.getNombre(),
-                    request.getApellidoPaterno(),
-                    request.getApellidoMaterno(),
                     request.getTelefono()
                 )
             );

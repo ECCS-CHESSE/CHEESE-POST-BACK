@@ -10,14 +10,12 @@ import java.util.Map;
 
 public interface ClientesQuery extends JpaRepository<CatalogoClientesEntity, Long> {
 
-    @Query(value = "SELECT * FROM \"controlventas\".fn_create_eccs_cliente(:idVenta, :idSucursal, :idEmpleado, :nombre, :apellidoPaterno, :apellidoMaterno, :telefono)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"controlventas\".fn_create_eccs_cliente(:idVenta, :idSucursal, :idEmpleado, :nombre, :telefono)", nativeQuery = true)
     List<Map<String, Object>> getCrearCliente(
         @Param("idVenta") Integer idVenta,
         @Param("idSucursal") Integer idSucursal,
         @Param("idEmpleado") Integer idEmpleado,
         @Param("nombre") String nombre,
-        @Param("apellidoPaterno") String apellidoPaterno,
-        @Param("apellidoMaterno") String apellidoMaterno,
         @Param("telefono") Long telefono
     );
 
