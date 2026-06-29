@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.productos.entity;
+package eccs.com.modules.controlinventarios.productos.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
