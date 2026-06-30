@@ -2,8 +2,9 @@ package eccs.com.modules.controlventas.comprobanteventa.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
-import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.query.ComprobanteVentaQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -141,6 +142,29 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - CANCELAR COMPROBANTE");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> updateClienteComprobanteVenta(UpdateClienteComprobanteVentaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.updateClienteComprobanteVenta(
+                    request.getId_venta(),
+                    request.getId_cliente()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - ACTUALIZAR CLIENTE COMPROBANTE");
+            response.setMensaje("CLIENTE ACTUALIZADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - ACTUALIZAR CLIENTE COMPROBANTE");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

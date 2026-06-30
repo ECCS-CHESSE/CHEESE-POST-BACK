@@ -53,4 +53,10 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("id")         Integer id
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_update_eccs_cliente_comprobante_venta(:id, :idCliente)", nativeQuery = true)
+    List<Map<String, Object>> updateClienteComprobanteVenta(
+        @Param("id")        Integer id,
+        @Param("idCliente") Integer idCliente
+    );
+
 }

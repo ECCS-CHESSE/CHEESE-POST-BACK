@@ -1,8 +1,9 @@
 package eccs.com.modules.controlventas.comprobanteventa.controller;
 
 import eccs.com.core.dtos.ResponseDto;
-import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.service.ComprobanteVentaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,11 @@ public class ComprobanteVentaController {
         @PathVariable Integer IdSucursal,
         @PathVariable Integer Id) {
         return ResponseEntity.ok(comprobanteVentaService.cancelarComprobanteVenta(IdSucursal, Id));
+    }
+
+    @PostMapping("/venta/cliente/update")
+    public ResponseEntity<ResponseDto<Object>> updateClienteComprobanteVenta(@Valid @RequestBody UpdateClienteComprobanteVentaRequestDto request) {
+        return ResponseEntity.ok(comprobanteVentaService.updateClienteComprobanteVenta(request));
     }
 
 }
