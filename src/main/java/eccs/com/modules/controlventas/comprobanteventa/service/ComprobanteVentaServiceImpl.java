@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ItemAumentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.query.ComprobanteVentaQuery;
 import lombok.RequiredArgsConstructor;
@@ -165,6 +166,29 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - ACTUALIZAR CLIENTE COMPROBANTE");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> itemAumenta(ItemAumentaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.itemAumenta(
+                    request.getId_venta(),
+                    request.getId_cantidad()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - ITEM AUMENTA");
+            response.setMensaje("ITEM ACTUALIZADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - ITEM AUMENTA");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

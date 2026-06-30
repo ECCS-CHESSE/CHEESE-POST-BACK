@@ -1,14 +1,20 @@
 package eccs.com.modules.controlventas.comprobanteventa.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ItemAumentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.service.ComprobanteVentaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/controlventas/comprobante")
@@ -58,6 +64,11 @@ public class ComprobanteVentaController {
     @PostMapping("/venta/cliente/update")
     public ResponseEntity<ResponseDto<Object>> updateClienteComprobanteVenta(@Valid @RequestBody UpdateClienteComprobanteVentaRequestDto request) {
         return ResponseEntity.ok(comprobanteVentaService.updateClienteComprobanteVenta(request));
+    }
+
+    @PostMapping("/item/cantidad")
+    public ResponseEntity<ResponseDto<Object>> itemAumenta(@Valid @RequestBody ItemAumentaRequestDto request) {
+        return ResponseEntity.ok(comprobanteVentaService.itemAumenta(request));
     }
 
 }
