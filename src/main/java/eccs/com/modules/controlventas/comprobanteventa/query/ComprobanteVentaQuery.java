@@ -65,4 +65,10 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("idCantidad") Integer idCantidad
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_eccs_compobante_cancelar(:idSucursal, :idVenta)", nativeQuery = true)
+    List<Map<String, Object>> eccsCancelarComprobante(
+        @Param("idSucursal") Integer idSucursal,
+        @Param("idVenta")    Integer idVenta
+    );
+
 }
