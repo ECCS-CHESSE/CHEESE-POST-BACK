@@ -2,6 +2,7 @@ package eccs.com.modules.controlinventarios.productos.controller;
 
 import eccs.com.modules.controlinventarios.productos.dto.ProductosRequestDto;
 import eccs.com.modules.controlinventarios.productos.dto.ProductosCategoriasRequestDto;
+import eccs.com.modules.controlinventarios.productos.dto.UpdateImagenProductoRequestDto;
 import eccs.com.modules.controlinventarios.productos.service.ProductosService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -24,6 +25,11 @@ public class ProductosController {
     @PostMapping("/data/categorias")
     public ResponseEntity<ResponseDto<Object>> getCatalogoCategorias(@Valid @RequestBody ProductosCategoriasRequestDto request) {
         return ResponseEntity.ok(productosService.getCatalogoCategorias(request));
+    }
+
+    @PostMapping("/update/imagen")
+    public ResponseEntity<ResponseDto<Object>> updateImagenProducto(@Valid @RequestBody UpdateImagenProductoRequestDto request) {
+        return ResponseEntity.ok(productosService.updateImagenProducto(request));
     }
 
 }

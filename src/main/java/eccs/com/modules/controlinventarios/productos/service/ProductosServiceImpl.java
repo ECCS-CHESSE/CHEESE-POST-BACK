@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlinventarios.productos.dto.ProductosRequestDto;
 import eccs.com.modules.controlinventarios.productos.dto.ProductosCategoriasRequestDto;
+import eccs.com.modules.controlinventarios.productos.dto.UpdateImagenProductoRequestDto;
 import eccs.com.modules.controlinventarios.productos.query.ProductosQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,26 @@ public class ProductosServiceImpl implements ProductosService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - CATEGORIAS");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> updateImagenProducto(UpdateImagenProductoRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                productosQuery.updateImagenProducto(request.getId_producto(), request.getImagen())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - PRODUCTOS");
+            response.setMensaje("IMAGEN ACTUALIZADA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - PRODUCTOS");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

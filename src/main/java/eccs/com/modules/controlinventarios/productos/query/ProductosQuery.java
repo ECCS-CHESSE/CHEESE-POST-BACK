@@ -21,4 +21,10 @@ public interface ProductosQuery extends JpaRepository<ProductosEntity, Long> {
         @Param("idSucursal") Integer idSucursal
     );
 
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_update_imagen_producto(:idProducto, :imagen)", nativeQuery = true)
+    List<Map<String, Object>> updateImagenProducto(
+        @Param("idProducto") Long idProducto,
+        @Param("imagen") byte[] imagen
+    );
+
 }
