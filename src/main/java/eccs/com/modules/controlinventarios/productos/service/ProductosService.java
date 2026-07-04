@@ -4,9 +4,12 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlinventarios.productos.dto.ProductosRequestDto;
 import eccs.com.modules.controlinventarios.productos.dto.ProductosCategoriasRequestDto;
 import eccs.com.modules.controlinventarios.productos.dto.UpdateImagenProductoRequestDto;
+import eccs.com.modules.controlinventarios.productos.dto.CreateProductoRequestDto;
 
 public interface ProductosService {
-    public ResponseDto<Object> getCatalogoProductos(ProductosRequestDto request);
-    public ResponseDto<Object> getCatalogoCategorias(ProductosCategoriasRequestDto request);
-    public ResponseDto<Object> updateImagenProducto(UpdateImagenProductoRequestDto request);
+    ResponseDto<Object> getCatalogoProductos(ProductosRequestDto request);
+    ResponseDto<Object> getCatalogoCategorias(ProductosCategoriasRequestDto request);
+    ResponseDto<Object> updateImagenProducto(UpdateImagenProductoRequestDto request);
+    ResponseDto<Object> createProducto(CreateProductoRequestDto request);
+    ResponseDto<Object> getProductosClasificacion8(ProductosRequestDto request);
 }
