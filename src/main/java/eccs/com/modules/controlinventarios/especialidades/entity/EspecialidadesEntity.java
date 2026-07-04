@@ -16,6 +16,5 @@ public class EspecialidadesEntity {
     private BigDecimal cantidad_producto;
     private BigDecimal precio_producto;
     private BigDecimal costo_producto;
-    private Integer id_eccs_equivalencia_producto;
     private Integer id_eccs_sucursal;
 }

@@ -5,6 +5,7 @@ import eccs.com.modules.controlinventarios.especialidades.dto.ActualizarEspecial
 import eccs.com.modules.controlinventarios.especialidades.dto.AgregarEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.AgregarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.EliminarIngredientesRequestDto;
+import eccs.com.modules.controlinventarios.especialidades.dto.EliminarEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.ModificarPrecioRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.IngredientesEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.service.EspecialidadesService;
@@ -36,8 +37,8 @@ public class EspecialidadesController {
     }
 
     @PostMapping("/eliminar/{id}")
-    public ResponseEntity<ResponseDto<Object>> eliminar(@PathVariable Long id) {
-        return ResponseEntity.ok(especialidadesService.eliminar(id));
+    public ResponseEntity<ResponseDto<Object>> eliminar(@Valid @RequestBody EliminarEspecialidadRequestDto request) {
+        return ResponseEntity.ok(especialidadesService.eliminar(request));
     }
 
     @PostMapping("/data/ingredientes")

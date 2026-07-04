@@ -5,6 +5,7 @@ import eccs.com.modules.controlinventarios.especialidades.dto.ActualizarEspecial
 import eccs.com.modules.controlinventarios.especialidades.dto.AgregarEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.AgregarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.EliminarIngredientesRequestDto;
+import eccs.com.modules.controlinventarios.especialidades.dto.EliminarEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.ModificarPrecioRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.dto.IngredientesEspecialidadRequestDto;
 import eccs.com.modules.controlinventarios.especialidades.entity.EspecialidadesEntity;
@@ -49,8 +50,6 @@ public class EspecialidadesServiceImpl implements EspecialidadesService {
             entity.setCantidad_producto(request.getCantidad_producto());
             entity.setPrecio_producto(request.getPrecio_producto());
             entity.setCosto_producto(request.getCosto_producto());
-            entity.setId_eccs_equivalencia_producto(request.getId_eccs_equivalencia_producto());
-            entity.setId_eccs_clasificacion(request.getId_eccs_clasificacion());
             entity.setId_eccs_sucursal(request.getId_eccs_sucursal());
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ESPECIALIDADES");
@@ -75,8 +74,6 @@ public class EspecialidadesServiceImpl implements EspecialidadesService {
             entity.setCantidad_producto(request.getCantidad_producto());
             entity.setPrecio_producto(request.getPrecio_producto());
             entity.setCosto_producto(request.getCosto_producto());
-            entity.setId_eccs_equivalencia_producto(request.getId_eccs_equivalencia_producto());
-            entity.setId_eccs_clasificacion(request.getId_eccs_clasificacion());
             entity.setId_eccs_sucursal(request.getId_eccs_sucursal());
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ESPECIALIDADES");
@@ -92,10 +89,12 @@ public class EspecialidadesServiceImpl implements EspecialidadesService {
     }
 
     @Override
-    public ResponseDto<Object> eliminar(Long id) {
+    public ResponseDto<Object> eliminar(EliminarEspecialidadRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
-            especialidadesQuery.deleteById(id);
+            jsonParserMiddleware.parseFunction(
+                especialidadesQuery.eliminarEspecialidad(request.getId_sucursal(), request.getId())
+            );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ESPECIALIDADES");
             response.setMensaje("ESPECIALIDAD ELIMINADA DE MANERA EXITOSA");

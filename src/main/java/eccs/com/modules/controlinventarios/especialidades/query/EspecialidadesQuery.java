@@ -15,4 +15,7 @@ public interface EspecialidadesQuery extends JpaRepository<EspecialidadesEntity,
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_pizza_especialidad_ingredientes(:idEspecialidad, :idSucursal)", nativeQuery = true)
     List<Map<String, Object>> getIngredientesEspecialidad(@Param("idEspecialidad") Integer idEspecialidad, @Param("idSucursal") Integer idSucursal);
 
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_eliminar_pizza_especialidad(:idSucursal, :id)", nativeQuery = true)
+    List<Map<String, Object>> eliminarEspecialidad(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id);
+
 }

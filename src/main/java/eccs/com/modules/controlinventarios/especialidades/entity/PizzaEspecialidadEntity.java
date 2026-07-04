@@ -19,7 +19,7 @@ public class PizzaEspecialidadEntity {
     @Column(name = "id_eccs_producto")
     private Integer idEccsProducto;
 
-    private BigDecimal cantidad_producto;
-    private BigDecimal precio_producto;
+    private BigDecimal cantidad_producto = BigDecimal.ONE;
+    private BigDecimal precio_producto = BigDecimal.ONE;
 
 }
