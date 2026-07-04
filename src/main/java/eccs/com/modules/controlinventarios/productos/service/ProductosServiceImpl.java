@@ -106,7 +106,7 @@ public class ProductosServiceImpl implements ProductosService {
     public ResponseDto<Object> getProductosClasificacion(ProductosRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
-            Object result = productoServicioQuery.getProductosByClasificacion(request.getId_sucursal());
+            Object result = productoServicioQuery.getProductosByClasificacion(request.getId_sucursal(), request.getId_clasificacion());
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - PRODUCTOS");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
