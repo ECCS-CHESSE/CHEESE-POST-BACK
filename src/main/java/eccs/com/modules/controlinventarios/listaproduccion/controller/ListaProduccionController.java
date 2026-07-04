@@ -25,4 +25,9 @@ public class ListaProduccionController {
         return ResponseEntity.ok(listaProduccionService.getLstOrillasQueso(request));
     }
 
+    @PostMapping("/lst/insumos")
+    public ResponseEntity<ResponseDto<Object>> getLstInsumos(@Valid @RequestBody ListaTipoSalsaRequestDto request) {
+        return ResponseEntity.ok(listaProduccionService.getLstInsumos(request));
+    }
+
 }

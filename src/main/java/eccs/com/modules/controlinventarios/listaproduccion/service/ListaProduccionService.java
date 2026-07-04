@@ -6,4 +6,5 @@ import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoSalsaReq
 public interface ListaProduccionService {
     ResponseDto<Object> getLstTipoSalsa(ListaTipoSalsaRequestDto request);
     ResponseDto<Object> getLstOrillasQueso(ListaTipoSalsaRequestDto request);
+    ResponseDto<Object> getLstInsumos(ListaTipoSalsaRequestDto request);
 }

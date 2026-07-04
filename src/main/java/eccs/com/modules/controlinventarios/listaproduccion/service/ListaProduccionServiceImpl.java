@@ -54,4 +54,24 @@ public class ListaProduccionServiceImpl implements ListaProduccionService {
         return response;
     }
 
+    @Override
+    public ResponseDto<Object> getLstInsumos(ListaTipoSalsaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                listaProduccionQuery.getLstInsumos(request.getId_sucursal())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
 }
