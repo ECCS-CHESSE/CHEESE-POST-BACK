@@ -10,6 +10,6 @@ import java.util.List;
 public interface ProductoServicioQuery extends JpaRepository<ProductoServicioEntity, Long> {
 
     @Query(value = "SELECT * FROM eccs_producto_servicio WHERE id_eccs_clasificacion = 8 AND id_eccs_sucursal = :idSucursal AND activo = true", nativeQuery = true)
-    List<ProductoServicioEntity> getProductosByClasificacion8(@Param("idSucursal") Integer idSucursal);
+    List<ProductoServicioEntity> getProductosByClasificacion(@Param("idSucursal") Integer idSucursal);
 
 }

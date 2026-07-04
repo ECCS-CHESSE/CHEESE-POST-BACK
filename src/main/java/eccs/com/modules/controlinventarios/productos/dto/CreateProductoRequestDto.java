@@ -10,4 +10,6 @@ public class CreateProductoRequestDto {
     private String descripcion;
     @NotNull
     private Integer id_sucursal;
+    @NotNull
+    private Integer id_clasificacion;
 }

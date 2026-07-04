@@ -87,6 +87,7 @@ public class ProductosServiceImpl implements ProductosService {
             ProductoServicioEntity entity = new ProductoServicioEntity();
             entity.setDescripcion(request.getDescripcion());
             entity.setIdEccsSucursal(request.getId_sucursal());
+            entity.setIdEccsClasificacion(request.getId_clasificacion());
             ProductoServicioEntity saved = productoServicioQuery.save(entity);
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - PRODUCTOS");
@@ -102,10 +103,10 @@ public class ProductosServiceImpl implements ProductosService {
     }
 
     @Override
-    public ResponseDto<Object> getProductosClasificacion8(ProductosRequestDto request) {
+    public ResponseDto<Object> getProductosClasificacion(ProductosRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
-            Object result = productoServicioQuery.getProductosByClasificacion8(request.getId_sucursal());
+            Object result = productoServicioQuery.getProductosByClasificacion(request.getId_sucursal());
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - PRODUCTOS");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");

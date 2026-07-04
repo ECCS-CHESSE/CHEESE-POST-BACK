@@ -38,9 +38,9 @@ public class ProductosController {
         return ResponseEntity.ok(productosService.createProducto(request));
     }
 
-    @PostMapping("/data/clasificacion8")
-    public ResponseEntity<ResponseDto<Object>> getProductosClasificacion8(@Valid @RequestBody ProductosRequestDto request) {
-        return ResponseEntity.ok(productosService.getProductosClasificacion8(request));
+    @PostMapping("/data/clasificacion")
+    public ResponseEntity<ResponseDto<Object>> getProductosClasificacion(@Valid @RequestBody ProductosRequestDto request) {
+        return ResponseEntity.ok(productosService.getProductosClasificacion(request));
     }
 
 }

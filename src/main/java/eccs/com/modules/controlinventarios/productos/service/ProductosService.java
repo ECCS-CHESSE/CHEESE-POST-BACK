@@ -11,5 +11,5 @@ public interface ProductosService {
     ResponseDto<Object> getCatalogoCategorias(ProductosCategoriasRequestDto request);
     ResponseDto<Object> updateImagenProducto(UpdateImagenProductoRequestDto request);
     ResponseDto<Object> createProducto(CreateProductoRequestDto request);
-    ResponseDto<Object> getProductosClasificacion8(ProductosRequestDto request);
+    ResponseDto<Object> getProductosClasificacion(ProductosRequestDto request);
 }
