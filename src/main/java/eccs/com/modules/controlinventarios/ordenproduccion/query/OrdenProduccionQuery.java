@@ -22,4 +22,10 @@ public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntit
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_insertar_orilla_queso(:idSucursal, :idProducto, :idVenta)", nativeQuery = true)
     List<Map<String, Object>> insertarOrillaQueso(@Param("idSucursal") Integer idSucursal, @Param("idProducto") Integer idProducto, @Param("idVenta") Integer idVenta);
 
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_update_categorias_arma_tu_pizza(:idSucursal, :idVenta, :idEquivalencia)", nativeQuery = true)
+    List<Map<String, Object>> updateCategoriasArmaTuPizza(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("idEquivalencia") Integer idEquivalencia);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_agregar_especificaciones_orden_pizza(:idSucursal, :idVenta, :especificaciones)", nativeQuery = true)
+    List<Map<String, Object>> agregarEspecificaciones(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("especificaciones") String especificaciones);
+
 }

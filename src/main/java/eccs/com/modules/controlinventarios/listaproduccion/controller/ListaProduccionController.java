@@ -41,4 +41,9 @@ public class ListaProduccionController {
         return ResponseEntity.ok(listaProduccionService.getDataIngredientes(request));
     }
 
+    @PostMapping("/lst/categorias/armatupizza")
+    public ResponseEntity<ResponseDto<Object>> getLstCategoriasArmaTuPizza() {
+        return ResponseEntity.ok(listaProduccionService.getLstCategoriasArmaTuPizza());
+    }
+
 }

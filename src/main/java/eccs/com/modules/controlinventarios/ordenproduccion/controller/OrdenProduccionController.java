@@ -3,6 +3,8 @@ package eccs.com.modules.controlinventarios.ordenproduccion.controller;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.UpdateCategoriasArmaTuPizzaRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.service.OrdenProduccionService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -35,6 +37,16 @@ public class OrdenProduccionController {
     @PostMapping("/agregar/orillaqueso")
     public ResponseEntity<ResponseDto<Object>> insertarOrillaQueso(@Valid @RequestBody InsertarSalsaRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.insertarOrillaQueso(request));
+    }
+
+    @PostMapping("/update/categorias/armatupizza")
+    public ResponseEntity<ResponseDto<Object>> updateCategoriasArmaTuPizza(@Valid @RequestBody UpdateCategoriasArmaTuPizzaRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.updateCategoriasArmaTuPizza(request));
+    }
+
+    @PostMapping("/agregar/especificaciones")
+    public ResponseEntity<ResponseDto<Object>> agregarEspecificaciones(@Valid @RequestBody EspecificacionesOrdenRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.agregarEspecificaciones(request));
     }
 
 }

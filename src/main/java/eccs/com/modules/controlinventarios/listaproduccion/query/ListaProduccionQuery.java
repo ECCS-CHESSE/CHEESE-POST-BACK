@@ -25,4 +25,7 @@ public interface ListaProduccionQuery extends JpaRepository<ListaProduccionEntit
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_data_ingredientes_data(:idSucursal, :idEspecialidad)", nativeQuery = true)
     List<Map<String, Object>> getDataIngredientes(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad") Integer idEspecialidad);
 
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_categorias_arma_tu_pizza()", nativeQuery = true)
+    List<Map<String, Object>> getLstCategoriasArmaTuPizza();
+
 }

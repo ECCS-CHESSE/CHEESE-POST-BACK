@@ -10,4 +10,5 @@ public interface ListaProduccionService {
     ResponseDto<Object> getLstInsumos(ListaTipoSalsaRequestDto request);
     ResponseDto<Object> getLstEspecialidades();
     ResponseDto<Object> getDataIngredientes(DataIngredientesRequestDto request);
+    ResponseDto<Object> getLstCategoriasArmaTuPizza();
 }
