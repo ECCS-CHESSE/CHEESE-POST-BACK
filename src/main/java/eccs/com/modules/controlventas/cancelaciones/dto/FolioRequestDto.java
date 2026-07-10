@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.folio.dto;
+package eccs.com.modules.controlventas.cancelaciones.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
