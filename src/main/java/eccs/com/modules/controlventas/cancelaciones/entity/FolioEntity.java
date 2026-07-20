@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.folio.entity;
+package eccs.com.modules.controlventas.cancelaciones.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,8 +1,8 @@
-package eccs.com.modules.controlventas.folio.controller;
+package eccs.com.modules.controlventas.cancelaciones.controller;
 
 import eccs.com.core.dtos.ResponseDto;
-import eccs.com.modules.controlventas.folio.dto.FolioRequestDto;
-import eccs.com.modules.controlventas.folio.service.FolioService;
+import eccs.com.modules.controlventas.cancelaciones.dto.FolioRequestDto;
+import eccs.com.modules.controlventas.cancelaciones.service.FolioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("controlinventariosFolioController")
-@RequestMapping("/controlinventarios/folio")
+@RestController("controlventasCancelacionesController")
+@RequestMapping("/controlventas/cancelaciones")
 @RequiredArgsConstructor
 public class FolioController {
 
@@ -21,5 +21,10 @@ public class FolioController {
     @PostMapping("/buscar")
     public ResponseEntity<ResponseDto<Object>> buscarFolio(@Valid @RequestBody FolioRequestDto request) {
         return ResponseEntity.ok(folioService.buscarFolio(request));
+    }
+
+    @PostMapping("/cancelar")
+    public ResponseEntity<ResponseDto<Object>> cancelarVenta(@Valid @RequestBody FolioRequestDto request) {
+        return ResponseEntity.ok(folioService.cancelarVenta(request));
     }
 }
