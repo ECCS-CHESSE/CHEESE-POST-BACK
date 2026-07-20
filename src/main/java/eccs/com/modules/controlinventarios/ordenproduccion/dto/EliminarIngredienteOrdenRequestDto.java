@@ -4,9 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class OrdenProduccionRequestDto {
+public class EliminarIngredienteOrdenRequestDto {
     @NotNull private Integer id_sucursal;
     @NotNull private Integer id;
-    @NotNull private Integer id_venta;
-    @NotNull private Integer id_lado_pizza;
 }

@@ -3,10 +3,13 @@ package eccs.com.modules.controlinventarios.ordenproduccion.service;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.SucursalRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.UpdateCategoriasArmaTuPizzaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesOrdenRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredienteOrdenRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.query.OrdenProduccionQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,12 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.insertarIngredientesOrden(request.getId_sucursal(), request.getId(), request.getId_venta())
+                ordenProduccionQuery.insertarIngredientesOrden(
+                    request.getId_sucursal(), 
+                    request.getId(), 
+                    request.getId_venta(),
+                    request.getId_lado_pizza()
+                )
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
@@ -128,6 +136,106 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
             response.setMensaje("ESPECIFICACIONES AGREGADAS DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getIngredientesOrdenDerecho(SucursalRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.getIngredientesOrdenDerecho(request.getId_sucursal())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getIngredientesOrdenIzquierdo(SucursalRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.getIngredientesOrdenIzquierdo(request.getId_sucursal())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> eliminarIngredienteOrden(EliminarIngredienteOrdenRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.eliminarIngredienteOrden(request.getId_sucursal(), request.getId())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("INGREDIENTE ELIMINADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getDataIngredientesDataDerecha(DataIngredientesDerecharRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.getDataIngredientesDataDerecha(request.getId_sucursal(), request.getId_especialidad())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getDataIngredientesDataIzquierda(DataIngredientesDerecharRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.getDataIngredientesDataIzquierda(request.getId_sucursal(), request.getId_especialidad())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("CONSULTA DE MANERA EXITOSA");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);

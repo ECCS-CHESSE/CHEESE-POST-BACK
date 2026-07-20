@@ -10,8 +10,8 @@ import java.util.Map;
 
 public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntity, Long> {
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_insertar_ingredientes_orden_produccion(:idSucursal, :id, :id_venta)", nativeQuery = true)
-    List<Map<String, Object>> insertarIngredientesOrden(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id, @Param("id_venta") Integer id_venta);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_insertar_ingredientes_orden_produccion(:idSucursal, :id, :id_venta, :id_lado_pizza)", nativeQuery = true)
+    List<Map<String, Object>> insertarIngredientesOrden(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id, @Param("id_venta") Integer id_venta, @Param("id_lado_pizza") Integer id_lado_pizza);
 
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_eliminar_ingredientes_orden_produccion(:idSucursal, :idEspecialidad1, :idEspecialidad2, :idVenta)", nativeQuery = true)
     List<Map<String, Object>> limpiarIngredientesOrden(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad1") Integer idEspecialidad1, @Param("idEspecialidad2") Integer idEspecialidad2, @Param("idVenta") Integer idVenta);
@@ -27,5 +27,20 @@ public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntit
 
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_agregar_especificaciones_orden_pizza(:idSucursal, :idVenta, :especificaciones)", nativeQuery = true)
     List<Map<String, Object>> agregarEspecificaciones(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("especificaciones") String especificaciones);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_derecho(:idSucursal)", nativeQuery = true)
+    List<Map<String, Object>> getIngredientesOrdenDerecho(@Param("idSucursal") Integer idSucursal);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_izquierdo(:idSucursal)", nativeQuery = true)
+    List<Map<String, Object>> getIngredientesOrdenIzquierdo(@Param("idSucursal") Integer idSucursal);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_eliminar_ingrediente_orden_produccion(:idSucursal, :id)", nativeQuery = true)
+    List<Map<String, Object>> eliminarIngredienteOrden(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_data_ingredientes_data_derecha(:idSucursal, :idEspecialidad)", nativeQuery = true)
+    List<Map<String, Object>> getDataIngredientesDataDerecha(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad") Integer idEspecialidad);
+
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_data_ingredientes_data_izquierda(:idSucursal, :idEspecialidad)", nativeQuery = true)
+    List<Map<String, Object>> getDataIngredientesDataIzquierda(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad") Integer idEspecialidad);
 
 }
