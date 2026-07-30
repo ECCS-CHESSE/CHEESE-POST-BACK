@@ -12,7 +12,9 @@ public class AgregarProductoRequestDto {
     @NotNull
     private Integer id_empleado;
     @NotNull
-    private Integer producto;
+    private Double precio;
     @NotNull
-    private Integer precio;
+    private String tamano;
+    @NotNull
+    private String producto_descripcion;
 }

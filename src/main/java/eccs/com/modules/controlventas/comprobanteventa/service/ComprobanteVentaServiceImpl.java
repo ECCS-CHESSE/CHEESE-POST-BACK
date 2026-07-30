@@ -113,8 +113,9 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
                     request.getId_sucursal(),
                     request.getId_venta(),
                     request.getId_empleado(),
-                    request.getProducto(),
-                    request.getPrecio()
+                    request.getPrecio(),
+                    request.getTamano(),
+                    request.getProducto_descripcion()
                 )
             );
             response.setSuccess(true);
