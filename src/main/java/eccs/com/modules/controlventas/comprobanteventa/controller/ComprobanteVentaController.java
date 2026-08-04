@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ConfirmarVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.EccsCancelarComprobanteRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ItemAumentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
@@ -70,6 +71,11 @@ public class ComprobanteVentaController {
     @PostMapping("/item/cantidad")
     public ResponseEntity<ResponseDto<Object>> itemAumenta(@Valid @RequestBody ItemAumentaRequestDto request) {
         return ResponseEntity.ok(comprobanteVentaService.itemAumenta(request));
+    }
+
+    @PostMapping("/venta/confirmar")
+    public ResponseEntity<ResponseDto<Object>> confirmarVenta(@Valid @RequestBody ConfirmarVentaRequestDto request) {
+        return ResponseEntity.ok(comprobanteVentaService.confirmarVenta(request));
     }
 
     @PostMapping("/venta/cancelar")

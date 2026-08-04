@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlventas.comprobanteventa.dto.AgregarProductoRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ComprobanteVentaRequestDto;
+import eccs.com.modules.controlventas.comprobanteventa.dto.ConfirmarVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.EccsCancelarComprobanteRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.ItemAumentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
@@ -191,6 +192,30 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - ITEM AUMENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> confirmarVenta(ConfirmarVentaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                comprobanteVentaQuery.confirmarVenta(
+                    request.getId_sucursal(),
+                    request.getId(),
+                    request.getId_empleado()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CONFIRMAR VENTA");
+            response.setMensaje("VENTA CONFIRMADA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CONFIRMAR VENTA");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }
