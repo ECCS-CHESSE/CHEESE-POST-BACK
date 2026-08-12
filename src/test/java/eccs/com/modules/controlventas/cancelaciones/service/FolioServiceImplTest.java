@@ -1,9 +1,9 @@
-package eccs.com.modules.controlventas.folio.service;
+package eccs.com.modules.controlventas.cancelaciones.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
-import eccs.com.modules.controlventas.folio.dto.FolioRequestDto;
-import eccs.com.modules.controlventas.folio.query.FolioQuery;
+import eccs.com.modules.controlventas.cancelaciones.dto.FolioRequestDto;
+import eccs.com.modules.controlventas.cancelaciones.query.FolioQuery;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
