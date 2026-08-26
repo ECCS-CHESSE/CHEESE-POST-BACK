@@ -7,6 +7,7 @@ import eccs.com.modules.controlventas.clientes.dto.ClientesCrearRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesCrearDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesActualizarDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesDomicilioRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesAgregarDomicilioVentaRequestDto;
 import eccs.com.modules.controlventas.clientes.query.ClientesQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,29 @@ public class ClientesServiceImpl implements ClientesService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - CREAR DOMICILIO");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getAgregarDomicilioVenta(ClientesAgregarDomicilioVentaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                clientesQuery.getAgregarDomicilioVenta(
+                    request.getId_venta(),
+                    request.getId_domicilio()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - AGREGAR DOMICILIO VENTA");
+            response.setMensaje("DOMICILIO AGREGADO A LA VENTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - CLIENTES - AGREGAR DOMICILIO VENTA");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }

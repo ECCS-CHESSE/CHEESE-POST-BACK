@@ -5,6 +5,7 @@ import eccs.com.modules.controlventas.clientes.dto.ClientesCrearRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesCrearDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesActualizarDomicilioRequestDto;
 import eccs.com.modules.controlventas.clientes.dto.ClientesDomicilioRequestDto;
+import eccs.com.modules.controlventas.clientes.dto.ClientesAgregarDomicilioVentaRequestDto;
 import eccs.com.modules.controlventas.clientes.service.ClientesService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -42,5 +43,10 @@ public class ClientesController {
     @PostMapping("/cliente/domicilio/actualizar")
     public ResponseEntity<ResponseDto<Object>> actualizarDomicilioCliente(@Valid @RequestBody ClientesActualizarDomicilioRequestDto request) {
         return ResponseEntity.ok(clientesService.getActualizarDomicilioCliente(request));
+    }
+
+    @PostMapping("/cliente/domicilio/venta/agregar")
+    public ResponseEntity<ResponseDto<Object>> agregarDomicilioVenta(@Valid @RequestBody ClientesAgregarDomicilioVentaRequestDto request) {
+        return ResponseEntity.ok(clientesService.getAgregarDomicilioVenta(request));
     }
 }

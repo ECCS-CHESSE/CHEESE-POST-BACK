@@ -55,4 +55,10 @@ public interface ClientesQuery extends JpaRepository<CatalogoClientesEntity, Lon
         @Param("idSucursal") Integer idSucursal
     );
 
+    @Query(value = "SELECT * FROM \"controlventas\".fn_agregar_domicilio_venta(:idVenta, :idDomicilio)", nativeQuery = true)
+    List<Map<String, Object>> getAgregarDomicilioVenta(
+        @Param("idVenta") Integer idVenta,
+        @Param("idDomicilio") Integer idDomicilio
+    );
+
 }
