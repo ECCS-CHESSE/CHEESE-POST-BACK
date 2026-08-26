@@ -9,6 +9,8 @@ import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesO
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredienteOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesDerecharRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteIzquierdoRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteDerechoRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.service.OrdenProduccionService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -91,6 +93,16 @@ public class OrdenProduccionController {
     @PostMapping("/total")
     public ResponseEntity<ResponseDto<Object>> getTotalOrdenProduccion(@Valid @RequestBody EliminarIngredienteOrdenRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.getTotalOrdenProduccion(request));
+    }
+
+    @PostMapping("/insertar/ingrediente/izquierdo")
+    public ResponseEntity<ResponseDto<Object>> insertarIngredienteIzquierdo(@Valid @RequestBody InsertarIngredienteIzquierdoRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.insertarIngredienteIzquierdo(request));
+    }
+
+    @PostMapping("/insertar/ingrediente/derecho")
+    public ResponseEntity<ResponseDto<Object>> insertarIngredienteDerecho(@Valid @RequestBody InsertarIngredienteDerechoRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.insertarIngredienteDerecho(request));
     }
 
 }

@@ -11,6 +11,8 @@ import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesO
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredienteOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesDerecharRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteIzquierdoRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteDerechoRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.query.OrdenProduccionQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -297,6 +299,54 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> insertarIngredienteIzquierdo(InsertarIngredienteIzquierdoRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.insertarIngredienteIzquierdo(
+                    request.getId_sucursal(),
+                    request.getId_venta(),
+                    request.getId_ingrediente()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("INGREDIENTE IZQUIERDO INSERTADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> insertarIngredienteDerecho(InsertarIngredienteDerechoRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                ordenProduccionQuery.insertarIngredienteDerecho(
+                    request.getId_sucursal(),
+                    request.getId_venta(),
+                    request.getId_ingrediente()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
+            response.setMensaje("INGREDIENTE DERECHO INSERTADO DE MANERA EXITOSA");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);

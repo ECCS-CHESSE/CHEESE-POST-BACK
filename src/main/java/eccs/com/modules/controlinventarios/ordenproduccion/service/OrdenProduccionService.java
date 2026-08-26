@@ -10,6 +10,8 @@ import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesO
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredienteOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesDerecharRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteIzquierdoRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteDerechoRequestDto;
 
 public interface OrdenProduccionService {
     ResponseDto<Object> insertarIngredientesOrden(OrdenProduccionRequestDto request);
@@ -26,4 +28,6 @@ public interface OrdenProduccionService {
     ResponseDto<Object> eliminarIngredientesDerecha(EliminarIngredientesDerecharRequestDto request);
     ResponseDto<Object> eliminarIngredientesIzquierda(EliminarIngredientesDerecharRequestDto request);
     ResponseDto<Object> getTotalOrdenProduccion(EliminarIngredienteOrdenRequestDto request);
+    ResponseDto<Object> insertarIngredienteIzquierdo(InsertarIngredienteIzquierdoRequestDto request);
+    ResponseDto<Object> insertarIngredienteDerecho(InsertarIngredienteDerechoRequestDto request);
 }
