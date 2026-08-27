@@ -3,6 +3,7 @@ package eccs.com.modules.controlinventarios.ordenproduccion.controller;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.SucursalRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.ModalDataIngredientesDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.UpdateCategoriasArmaTuPizzaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesOrdenRequestDto;
@@ -11,6 +12,7 @@ import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesD
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteIzquierdoRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteDerechoRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarArmadoPizzaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.service.OrdenProduccionService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
@@ -56,12 +58,12 @@ public class OrdenProduccionController {
     }
 
     @PostMapping("/data/ingredientes/derecho")
-    public ResponseEntity<ResponseDto<Object>> getIngredientesOrdenDerecho(@Valid @RequestBody SucursalRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getIngredientesOrdenDerecho(@Valid @RequestBody ModalDataIngredientesDto request) {
         return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenDerecho(request));
     }
 
     @PostMapping("/data/ingredientes/izquierdo")
-    public ResponseEntity<ResponseDto<Object>> getIngredientesOrdenIzquierdo(@Valid @RequestBody SucursalRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getIngredientesOrdenIzquierdo(@Valid @RequestBody ModalDataIngredientesDto request) {
         return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenIzquierdo(request));
     }
 
@@ -103,6 +105,11 @@ public class OrdenProduccionController {
     @PostMapping("/insertar/ingrediente/derecho")
     public ResponseEntity<ResponseDto<Object>> insertarIngredienteDerecho(@Valid @RequestBody InsertarIngredienteDerechoRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.insertarIngredienteDerecho(request));
+    }
+
+    @PostMapping("/limpiar/armado/pizza")
+    public ResponseEntity<ResponseDto<Object>> limpiarArmadoPizza(@Valid @RequestBody LimpiarArmadoPizzaRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.limpiarArmadoPizza(request));
     }
 
 }
