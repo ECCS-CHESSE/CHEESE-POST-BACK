@@ -10,14 +10,14 @@ import java.util.Map;
 
 public interface ListaProduccionQuery extends JpaRepository<ListaProduccionEntity, Long> {
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_tipo_salsa(:id)", nativeQuery = true)
-    List<Map<String, Object>> getLstTipoSalsa(@Param("id") Integer id);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_tipo_salsa(:id, :id_equivalencia)", nativeQuery = true)
+    List<Map<String, Object>> getLstTipoSalsa(@Param("id") Integer id, @Param("id_equivalencia") Integer id_equivalencia);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_orillas_queso(:id)", nativeQuery = true)
-    List<Map<String, Object>> getLstOrillasQueso(@Param("id") Integer id);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_orillas_queso(:id, :id_equivalencia )", nativeQuery = true)
+    List<Map<String, Object>> getLstOrillasQueso(@Param("id") Integer id, @Param("id_equivalencia") Integer id_equivalencia);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_insumos(:id)", nativeQuery = true)
-    List<Map<String, Object>> getLstInsumos(@Param("id") Integer id);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_insumos(:id, :id_equivalencia)", nativeQuery = true)
+    List<Map<String, Object>> getLstInsumos(@Param("id") Integer id, @Param("id_equivalencia") Integer id_equivalencia);
 
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_lst_especialidades()", nativeQuery = true)
     List<Map<String, Object>> getLstEspecialidades();

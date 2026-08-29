@@ -1,6 +1,6 @@
 package eccs.com.modules.controlinventarios.listaproduccion.controller;
 
-import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoSalsaRequestDto;
+import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoEquivalenciaRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.DataIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.service.ListaProduccionService;
 import eccs.com.core.dtos.ResponseDto;
@@ -17,17 +17,17 @@ public class ListaProduccionController {
     private final ListaProduccionService listaProduccionService;
 
     @PostMapping("/lst/salsas")
-    public ResponseEntity<ResponseDto<Object>> getLstTipoSalsa(@Valid @RequestBody ListaTipoSalsaRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getLstTipoSalsa(@Valid @RequestBody ListaTipoEquivalenciaRequestDto request) {
         return ResponseEntity.ok(listaProduccionService.getLstTipoSalsa(request));
     }
 
     @PostMapping("/lst/orillaqueso")
-    public ResponseEntity<ResponseDto<Object>> getLstOrillasQueso(@Valid @RequestBody ListaTipoSalsaRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getLstOrillasQueso(@Valid @RequestBody ListaTipoEquivalenciaRequestDto request) {
         return ResponseEntity.ok(listaProduccionService.getLstOrillasQueso(request));
     }
 
     @PostMapping("/lst/insumos")
-    public ResponseEntity<ResponseDto<Object>> getLstInsumos(@Valid @RequestBody ListaTipoSalsaRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getLstInsumos(@Valid @RequestBody ListaTipoEquivalenciaRequestDto request) {
         return ResponseEntity.ok(listaProduccionService.getLstInsumos(request));
     }
 
