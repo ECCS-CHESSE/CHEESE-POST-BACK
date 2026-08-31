@@ -156,7 +156,7 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getIngredientesOrdenDerecho(request.getId_sucursal(), request.getIdVenta())
+                ordenProduccionQuery.getIngredientesOrdenDerecho(request.getId_equivalencia(), request.getId_sucursal(), request.getIdVenta())
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
@@ -176,7 +176,7 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getIngredientesOrdenIzquierdo(request.getId_sucursal(), request.getIdVenta())
+                ordenProduccionQuery.getIngredientesOrdenIzquierdo(request.getId_equivalencia(), request.getId_sucursal(), request.getIdVenta())
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");

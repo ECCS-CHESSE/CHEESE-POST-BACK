@@ -28,11 +28,11 @@ public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntit
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_agregar_especificaciones_orden_pizza(:idSucursal, :idVenta, :especificaciones)", nativeQuery = true)
     List<Map<String, Object>> agregarEspecificaciones(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("especificaciones") String especificaciones);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_derecho(:idSucursal, :idVenta )", nativeQuery = true)
-    List<Map<String, Object>> getIngredientesOrdenDerecho(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_derecho(:idEquivalencia, :idSucursal, :idVenta )", nativeQuery = true)
+    List<Map<String, Object>> getIngredientesOrdenDerecho(  @Param("idEquivalencia") Integer idEquivalencia, @Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_izquierdo(:idSucursal, :idVenta)", nativeQuery = true)
-    List<Map<String, Object>> getIngredientesOrdenIzquierdo(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta);
+    @Query(value = "SELECT * FROM \"controlinventarios\".fn_modal_catalogo_ingredientes_orden_produccion_izquierdo(:idEquivalencia, :idSucursal, :idVenta )", nativeQuery = true)
+    List<Map<String, Object>> getIngredientesOrdenIzquierdo(@Param("idEquivalencia") Integer idEquivalencia, @Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta);
 
     @Query(value = "SELECT * FROM \"controlinventarios\".fn_eliminar_ingrediente_orden_produccion(:idSucursal, :id)", nativeQuery = true)
     List<Map<String, Object>> eliminarIngredienteOrden(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id);

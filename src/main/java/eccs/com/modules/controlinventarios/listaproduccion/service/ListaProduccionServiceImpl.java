@@ -2,7 +2,7 @@ package eccs.com.modules.controlinventarios.listaproduccion.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
-import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoSalsaRequestDto;
+import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoEquivalenciaRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.DataIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.query.ListaProduccionQuery;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ public class ListaProduccionServiceImpl implements ListaProduccionService {
     private final JsonParserMiddleware jsonParserMiddleware;
 
     @Override
-    public ResponseDto<Object> getLstTipoSalsa(ListaTipoSalsaRequestDto request) {
+    public ResponseDto<Object> getLstTipoSalsa(ListaTipoEquivalenciaRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                listaProduccionQuery.getLstTipoSalsa(request.getId_sucursal())
+                listaProduccionQuery.getLstTipoSalsa(request.getId_sucursal(), request.getId_equivalencia())
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
@@ -36,11 +36,11 @@ public class ListaProduccionServiceImpl implements ListaProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getLstOrillasQueso(ListaTipoSalsaRequestDto request) {
+    public ResponseDto<Object> getLstOrillasQueso(ListaTipoEquivalenciaRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                listaProduccionQuery.getLstOrillasQueso(request.getId_sucursal())
+                listaProduccionQuery.getLstOrillasQueso(request.getId_sucursal(), request.getId_equivalencia())
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
@@ -56,11 +56,11 @@ public class ListaProduccionServiceImpl implements ListaProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getLstInsumos(ListaTipoSalsaRequestDto request) {
+    public ResponseDto<Object> getLstInsumos(ListaTipoEquivalenciaRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                listaProduccionQuery.getLstInsumos(request.getId_sucursal())
+                listaProduccionQuery.getLstInsumos(request.getId_sucursal(), request.getId_equivalencia())
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
