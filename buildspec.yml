@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 154020589367.dkr.ecr.us-east-2.amazonaws.com
+  build:
+    commands:
+      - docker build -t cheese-post-back .
+      - docker tag cheese-post-back:latest 154020589367.dkr.ecr.us-east-2.amazonaws.com/cheese-post-back:latest
+  post_build:
+    commands:
+      - docker push 154020589367.dkr.ecr.us-east-2.amazonaws.com/cheese-post-back:latest
+      - printf '[{"name":"cheese-post-back","imageUri":"154020589367.dkr.ecr.us-east-2.amazonaws.com/cheese-post-back:latest"}]' > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
+
+
