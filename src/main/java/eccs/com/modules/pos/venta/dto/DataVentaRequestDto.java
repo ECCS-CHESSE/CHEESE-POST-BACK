@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.venta.dto;
+package eccs.com.modules.pos.venta.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

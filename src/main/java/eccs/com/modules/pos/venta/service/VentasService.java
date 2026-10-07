@@ -1,8 +1,8 @@
-package eccs.com.modules.controlventas.venta.service;
+package eccs.com.modules.pos.venta.service;
 
 import eccs.com.core.dtos.ResponseDto;
-import eccs.com.modules.controlventas.venta.dto.CrearVentaRequestDto;
-import eccs.com.modules.controlventas.venta.dto.DataVentaRequestDto;
+import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
+import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
 
 public interface VentasService {
     public ResponseDto<Object> getCrearVenta(CrearVentaRequestDto request);

@@ -1,10 +1,10 @@
-package eccs.com.modules.controlventas.venta.service;
+package eccs.com.modules.pos.venta.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
-import eccs.com.modules.controlventas.venta.dto.CrearVentaRequestDto;
-import eccs.com.modules.controlventas.venta.dto.DataVentaRequestDto;
-import eccs.com.modules.controlventas.venta.query.VentasQuery;
+import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
+import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
+import eccs.com.modules.pos.venta.query.VentasQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

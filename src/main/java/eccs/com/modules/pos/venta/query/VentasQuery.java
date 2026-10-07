@@ -1,4 +1,4 @@
-package eccs.com.modules.controlventas.venta.query;
+package eccs.com.modules.pos.venta.query;
 
 import eccs.com.modules.controlventas.cortes.entity.CortesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import java.util.Map;
 public interface VentasQuery extends JpaRepository<CortesEntity, Long> {
 
 
-    @Query(value = "SELECT * FROM \"controlventas\".fn_create_comprobante_venta(:id_eccs_sucursal, :id_eccs_cliente, :id_eccs_empleado, :id_eccs_tipo_pedido)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"pos\".fn_create_comprobante_venta(:id_eccs_sucursal, :id_eccs_cliente, :id_eccs_empleado, :id_eccs_tipo_pedido)", nativeQuery = true)
     List<Map<String, Object>> getCrearVenta(
         @Param("id_eccs_sucursal") Integer id_eccs_sucursal,
         @Param("id_eccs_cliente") Integer id_eccs_cliente,
