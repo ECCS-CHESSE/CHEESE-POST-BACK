@@ -1,0 +1,54 @@
+name: Deploy back
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: corp69/cheese-pizza-post-back:latest
+
+      - name: Deploy EC2
+        run: |
+          set -euo pipefail
+          test -n "${{ secrets.EC2_HOST_NAME }}" || { echo "Falta configurar EC2_HOST_NAME"; exit 1; }
+          test -n "${{ secrets.EC2_HOST }}" || { echo "Falta configurar EC2_HOST"; exit 1; }
+          test -n "${{ secrets.EC2_SSH_KEY }}" || { echo "Falta configurar EC2_SSH_KEY"; exit 1; }
+
+          echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/key.pem
+          chmod 600 /tmp/key.pem
+          trap 'rm -f /tmp/key.pem' EXIT
+
+          ssh -o StrictHostKeyChecking=no -i /tmp/key.pem \
+            "${{ secrets.EC2_HOST_NAME }}@${{ secrets.EC2_HOST }}" << 'EOF'
+            set -e
+            if ! command -v docker >/dev/null 2>&1; then
+              curl -fsSL https://get.docker.com | sudo sh
+            fi
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+            sudo docker pull corp69/cheese-pizza-post-back:latest
+            sudo docker rm -f cheese-pizza-post-back 2>/dev/null || true
+            sudo docker run -d \
+              --name cheese-pizza-post-back \
+              -p 8080:8080 \
+              --restart unless-stopped \
+              corp69/cheese-pizza-post-back:latest
+          EOF
