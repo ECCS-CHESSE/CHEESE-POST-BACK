@@ -1,6 +1,7 @@
 package eccs.com.modules.controlinventarios.listaproduccion.controller;
 
 import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoEquivalenciaRequestDto;
+import eccs.com.modules.controlinventarios.listaproduccion.dto.SucursalDto;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.DataIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.service.ListaProduccionService;
 import eccs.com.core.dtos.ResponseDto;
@@ -42,8 +43,8 @@ public class ListaProduccionController {
     }
 
     @PostMapping("/lst/categorias/armatupizza")
-    public ResponseEntity<ResponseDto<Object>> getLstCategoriasArmaTuPizza() {
-        return ResponseEntity.ok(listaProduccionService.getLstCategoriasArmaTuPizza());
+    public ResponseEntity<ResponseDto<Object>> getLstCategoriasArmaTuPizza( @Valid @RequestBody SucursalDto request ) {
+        return ResponseEntity.ok(listaProduccionService.getLstCategoriasArmaTuPizza(request));
     }
 
 }

@@ -16,7 +16,7 @@ public interface ProductosQuery extends JpaRepository<ProductosEntity, Long> {
         @Param("idClasificacion") Integer idClasificacion
     );
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_catalogo_eccs_categorias(:idSucursal)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"pos\".fn_get_catalogo_eccs_categorias(:idSucursal)", nativeQuery = true)
     List<Map<String, Object>> getCatalogoCategorias(
         @Param("idSucursal") Integer idSucursal
     );

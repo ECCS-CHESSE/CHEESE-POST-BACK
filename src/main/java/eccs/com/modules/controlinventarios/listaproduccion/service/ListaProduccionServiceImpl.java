@@ -3,6 +3,7 @@ package eccs.com.modules.controlinventarios.listaproduccion.service;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoEquivalenciaRequestDto;
+import eccs.com.modules.controlinventarios.listaproduccion.dto.SucursalDto;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.DataIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.query.ListaProduccionQuery;
 import lombok.RequiredArgsConstructor;
@@ -116,19 +117,19 @@ public class ListaProduccionServiceImpl implements ListaProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getLstCategoriasArmaTuPizza() {
+    public ResponseDto<Object> getLstCategoriasArmaTuPizza( SucursalDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                listaProduccionQuery.getLstCategoriasArmaTuPizza()
+                listaProduccionQuery.getLstCategoriasArmaTuPizza( request.getId_sucursal())
             );
             response.setSuccess(true);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
+            response.setTitulo("ECCS - Arma tu pizza categoeria ");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - LISTA PRODUCCION");
+            response.setTitulo("ECCS - Arma tu pizza categoeria ");
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }
