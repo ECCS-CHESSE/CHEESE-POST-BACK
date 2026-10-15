@@ -1,7 +1,6 @@
 package eccs.com.modules.controlinventarios.ordenproduccion.controller;
 
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
-import eccs.com.modules.controlinventarios.ordenproduccion.dto.SucursalRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.ModalDataIngredientesDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;

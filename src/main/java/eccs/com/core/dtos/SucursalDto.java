@@ -1,4 +1,4 @@
-package eccs.com.modules.controlinventarios.listaproduccion.dto;
+package eccs.com.core.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package eccs.com.modules.controlinventarios.listaproduccion.controller;
 
 import eccs.com.modules.controlinventarios.listaproduccion.dto.ListaTipoEquivalenciaRequestDto;
-import eccs.com.modules.controlinventarios.listaproduccion.dto.SucursalDto;
+import eccs.com.core.dtos.SucursalDto;
 import eccs.com.modules.controlinventarios.listaproduccion.dto.DataIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.listaproduccion.service.ListaProduccionService;
 import eccs.com.core.dtos.ResponseDto;
@@ -18,12 +18,12 @@ public class ListaProduccionController {
     private final ListaProduccionService listaProduccionService;
 
     @PostMapping("/lst/salsas")
-    public ResponseEntity<ResponseDto<Object>> getLstTipoSalsa(@Valid @RequestBody ListaTipoEquivalenciaRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getLstTipoSalsa(@Valid @RequestBody SucursalDto request) {
         return ResponseEntity.ok(listaProduccionService.getLstTipoSalsa(request));
     }
 
     @PostMapping("/lst/orillaqueso")
-    public ResponseEntity<ResponseDto<Object>> getLstOrillasQueso(@Valid @RequestBody ListaTipoEquivalenciaRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getLstOrillasQueso(@Valid @RequestBody SucursalDto request) {
         return ResponseEntity.ok(listaProduccionService.getLstOrillasQueso(request));
     }
 
@@ -33,8 +33,8 @@ public class ListaProduccionController {
     }
 
     @PostMapping("/lst/especialidades")
-    public ResponseEntity<ResponseDto<Object>> getLstEspecialidades() {
-        return ResponseEntity.ok(listaProduccionService.getLstEspecialidades());
+    public ResponseEntity<ResponseDto<Object>> getLstEspecialidades(@Valid @RequestBody SucursalDto request) {
+        return ResponseEntity.ok(listaProduccionService.getLstEspecialidades(request));
     }
 
     @PostMapping("/data/ingredientes")
