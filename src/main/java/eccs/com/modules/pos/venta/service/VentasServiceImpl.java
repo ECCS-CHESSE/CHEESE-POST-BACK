@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
 import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
+import eccs.com.modules.pos.venta.dto.ResumenArmaTuPizzaRequestDto;
 import eccs.com.modules.pos.venta.query.VentasQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,31 @@ public class VentasServiceImpl implements VentasService {
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
             response.setMensaje("Información de la venta.");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getPrecioArmaTuPizzaResumen(ResumenArmaTuPizzaRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                VentasQuery.getPrecioArmaTuPizzaResumen(
+                    request.getId_sucursal(),
+                    request.getId_venta(),
+                    request.getId_pc(),
+                    request.getId_tamano()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
+            response.setMensaje("Resumen de precio de arma tu pizza.");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);

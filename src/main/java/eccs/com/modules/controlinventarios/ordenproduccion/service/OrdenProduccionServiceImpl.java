@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.SucursalRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.TotalesOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.ModalDataIngredientesDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
@@ -313,11 +314,18 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getTotalOrdenProduccion(EliminarIngredienteOrdenRequestDto request) {
+    public ResponseDto<Object> getTotalOrdenProduccion(TotalesOrdenRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getTotalOrdenProduccion(request.getId_sucursal(), request.getId())
+                ordenProduccionQuery.getTotalOrdenProduccion(
+                
+                    request.getId_sucursal(),
+                    request.getId_venta(),
+                    request.getId_pc(),
+                    request.getId_tamano()
+                
+                )
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");

@@ -1,6 +1,7 @@
 package eccs.com.modules.controlinventarios.ordenproduccion.controller;
 
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.TotalesOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.ModalDataIngredientesDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
@@ -94,7 +95,7 @@ public class OrdenProduccionController {
     }
 
     @PostMapping("/total")
-    public ResponseEntity<ResponseDto<Object>> getTotalOrdenProduccion(@Valid @RequestBody EliminarIngredienteOrdenRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> getTotalOrdenProduccion(@Valid @RequestBody TotalesOrdenRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.getTotalOrdenProduccion(request));
     }
 

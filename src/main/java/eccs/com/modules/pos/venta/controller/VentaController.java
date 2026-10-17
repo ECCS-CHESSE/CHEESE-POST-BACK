@@ -3,6 +3,7 @@ package eccs.com.modules.pos.venta.controller;
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
 import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
+import eccs.com.modules.pos.venta.dto.ResumenArmaTuPizzaRequestDto;
 import eccs.com.modules.pos.venta.service.VentasService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,11 @@ public class VentaController {
     @PostMapping("/venta/nueva")
     public ResponseEntity<ResponseDto<Object>> crearVenta(@Valid @RequestBody CrearVentaRequestDto request) {
         return ResponseEntity.ok(VentasService.getCrearVenta(request));
+    }
+
+    @PostMapping("/venta/armatupizza/resumen")
+    public ResponseEntity<ResponseDto<Object>> getPrecioArmaTuPizzaResumen(@Valid @RequestBody ResumenArmaTuPizzaRequestDto request) {
+        return ResponseEntity.ok(VentasService.getPrecioArmaTuPizzaResumen(request));
     }
   
 

@@ -27,4 +27,12 @@ public interface VentasQuery extends JpaRepository<CortesEntity, Long> {
         @Param("id") Integer id
     );
 
+    @Query(value = "SELECT * FROM \"pos\".fn_get_precio_arma_tu_pizza_resumen(:id_sucursal, :id_venta, :id_pc, :id_tamano)", nativeQuery = true)
+    List<Map<String, Object>> getPrecioArmaTuPizzaResumen(
+        @Param("id_sucursal") Integer id_sucursal,
+        @Param("id_venta") Integer id_venta,
+        @Param("id_pc") Integer id_pc,
+        @Param("id_tamano") Integer id_tamano
+    );
+
 }

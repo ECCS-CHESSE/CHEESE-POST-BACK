@@ -2,6 +2,7 @@ package eccs.com.modules.controlinventarios.ordenproduccion.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.OrdenProduccionRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.TotalesOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarIngredientesRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.ModalDataIngredientesDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarSalsaRequestDto;
@@ -28,7 +29,7 @@ public interface OrdenProduccionService {
     ResponseDto<Object> getDataIngredientesDataIzquierda(DataIngredientesDerecharRequestDto request);
     ResponseDto<Object> eliminarIngredientesDerecha(EliminarIngredientesIzquierdaDerecharRequestDto request);
     ResponseDto<Object> eliminarIngredientesIzquierda(EliminarIngredientesIzquierdaDerecharRequestDto request);
-    ResponseDto<Object> getTotalOrdenProduccion(EliminarIngredienteOrdenRequestDto request);
+    ResponseDto<Object> getTotalOrdenProduccion(TotalesOrdenRequestDto request);
     ResponseDto<Object> insertarIngrediente(InsertarIngredienteIzquierdoRequestDto request);
     ResponseDto<Object> insertarIngredienteDerecho(InsertarIngredienteDerechoRequestDto request);
     ResponseDto<Object> limpiarArmadoPizza(LimpiarArmadoPizzaRequestDto request);

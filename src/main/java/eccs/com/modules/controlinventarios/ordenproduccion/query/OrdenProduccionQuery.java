@@ -64,8 +64,13 @@ public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntit
     @Query(value = "SELECT * FROM \"pos\".fn_get_eliminar_ingredientes_izquierda_derecha(:idSucursal, :idVenta, :idEspecialidad, :idLado, :idPc)", nativeQuery = true)
     List<Map<String, Object>> eliminarIngredientesDerecha(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("idEspecialidad") Integer idEspecialidad, @Param("idLado") Integer idLado, @Param("idPc") Integer idPc);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_total_orden_produccion(:idSucursal, :id)", nativeQuery = true)
-    List<Map<String, Object>> getTotalOrdenProduccion(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id);
+    @Query(value = "SELECT * FROM \"pos\".fn_get_total_orden_produccion(:idSucursal, :id_venta, :id_pc, :id_tamano )", nativeQuery = true)
+    List<Map<String, Object>> getTotalOrdenProduccion(
+        @Param("idSucursal")    Integer idSucursal, 
+        @Param("id_venta")      Integer id_venta, 
+        @Param("id_pc")         Integer id_pc, 
+        @Param("id_tamano")     Integer id_tamano
+    );
 
     @Query(value = "SELECT * FROM \"pos\".fn_insertar_ingrediente(:idSucursal, :idVenta, :id_ingrediente, :idEspecialidad, :idTamano, :idPC,  :idLadoPizza )", nativeQuery = true)
     List<Map<String, Object>> insertarIngredienteIzquierdo( 
