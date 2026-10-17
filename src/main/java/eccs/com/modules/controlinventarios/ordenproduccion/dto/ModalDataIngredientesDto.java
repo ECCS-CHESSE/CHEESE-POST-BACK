@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 public class ModalDataIngredientesDto {
 
+    @NotNull private Integer id_venta;
+    @NotNull private Integer id_pc;
     @NotNull private Integer id_equivalencia;
     @NotNull private Integer id_sucursal;
 

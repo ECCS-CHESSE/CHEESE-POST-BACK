@@ -5,10 +5,11 @@ import lombok.Data;
 
 @Data
 public class InsertarSalsaRequestDto {
-    @NotNull
-    private Integer id_sucursal;
-    @NotNull
-    private Integer id_producto;
-    @NotNull
-    private Integer id_venta;
+    
+    @NotNull private Integer id_sucursal;
+    @NotNull private Integer id_producto;
+    @NotNull private Integer id_venta;
+    @NotNull private Integer id_pc;
+    @NotNull private Integer id_tamano;
+
 }

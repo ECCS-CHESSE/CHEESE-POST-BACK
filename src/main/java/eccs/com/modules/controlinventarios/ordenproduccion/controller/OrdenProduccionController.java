@@ -8,23 +8,25 @@ import eccs.com.modules.controlinventarios.ordenproduccion.dto.UpdateCategoriasA
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EspecificacionesOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredienteOrdenRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.DataIngredientesDerecharRequestDto;
-import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesDerecharRequestDto;
+import eccs.com.modules.controlinventarios.ordenproduccion.dto.EliminarIngredientesIzquierdaDerecharRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteIzquierdoRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.InsertarIngredienteDerechoRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.dto.LimpiarArmadoPizzaRequestDto;
 import eccs.com.modules.controlinventarios.ordenproduccion.service.OrdenProduccionService;
 import eccs.com.core.dtos.ResponseDto;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("controlinventariosOrdenProduccionController")
 @RequestMapping("/controlinventarios/ordenproduccion")
-@RequiredArgsConstructor
 public class OrdenProduccionController {
 
     private final OrdenProduccionService ordenProduccionService;
+
+    public OrdenProduccionController(OrdenProduccionService ordenProduccionService) {
+        this.ordenProduccionService = ordenProduccionService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto<Object>> insertarIngredientesOrden(@Valid @RequestBody OrdenProduccionRequestDto request) {
@@ -62,7 +64,7 @@ public class OrdenProduccionController {
     }
 
     @PostMapping("/data/ingredientes/izquierdo")
-    public ResponseEntity<ResponseDto<Object>> getIngredientesOrdenIzquierdo(@Valid @RequestBody ModalDataIngredientesDto request) {
+    public ResponseEntity<ResponseDto<Object>> modal_catalogo_ingredientes_orden_produccion_izquierdo(@Valid @RequestBody ModalDataIngredientesDto request) {
         return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenIzquierdo(request));
     }
 
@@ -82,12 +84,12 @@ public class OrdenProduccionController {
     }
 
     @PostMapping("/limpiar/ingredientes/derecha")
-    public ResponseEntity<ResponseDto<Object>> eliminarIngredientesDerecha(@Valid @RequestBody EliminarIngredientesDerecharRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> eliminarIngredientesDerecha(@Valid @RequestBody EliminarIngredientesIzquierdaDerecharRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.eliminarIngredientesDerecha(request));
     }
 
     @PostMapping("/limpiar/ingredientes/izquierda")
-    public ResponseEntity<ResponseDto<Object>> eliminarIngredientesIzquierda(@Valid @RequestBody EliminarIngredientesDerecharRequestDto request) {
+    public ResponseEntity<ResponseDto<Object>> eliminarIngredientesIzquierda(@Valid @RequestBody EliminarIngredientesIzquierdaDerecharRequestDto request) {
         return ResponseEntity.ok(ordenProduccionService.eliminarIngredientesIzquierda(request));
     }
 
@@ -96,9 +98,9 @@ public class OrdenProduccionController {
         return ResponseEntity.ok(ordenProduccionService.getTotalOrdenProduccion(request));
     }
 
-    @PostMapping("/insertar/ingrediente/izquierdo")
+    @PostMapping("/insertar/ingrediente")
     public ResponseEntity<ResponseDto<Object>> insertarIngredienteIzquierdo(@Valid @RequestBody InsertarIngredienteIzquierdoRequestDto request) {
-        return ResponseEntity.ok(ordenProduccionService.insertarIngredienteIzquierdo(request));
+        return ResponseEntity.ok(ordenProduccionService.insertarIngrediente(request));
     }
 
     @PostMapping("/insertar/ingrediente/derecho")
