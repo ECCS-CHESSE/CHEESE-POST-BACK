@@ -45,24 +45,30 @@ public interface OrdenProduccionQuery extends JpaRepository<OrdenProduccionEntit
     @Query(value = "SELECT * FROM \"pos\".fn_modal_catalogo_ingredientes_orden_produccion_derecho(:idEquivalencia, :idSucursal, :idVenta )", nativeQuery = true)
     List<Map<String, Object>> getIngredientesOrdenDerecho(  @Param("idEquivalencia") Integer idEquivalencia, @Param("idSucursal") Integer idSucursal );
 
-    @Query(value = "SELECT * FROM \"pos\".fn_modal_catalogo_ingredientes_orden_produccion_izquierdo(:id_venta, :id_pc, :idEquivalencia, :idSucursal)", nativeQuery = true)
-    List<Map<String, Object>> getIngredientesOrdenIzquierdo( @Param("id_venta") Integer id_venta, @Param("id_pc") Integer id_pc,  @Param("idEquivalencia") Integer idEquivalencia, @Param("idSucursal") Integer idSucursal);
+    @Query(value = "SELECT * FROM \"pos\".fn_modal_catalogo_orden_produccion_izquierdo_derecho(:id_venta, :id_pc, :idEquivalencia, :idSucursal, :idLado)", nativeQuery = true)
+    List<Map<String, Object>> getIngredientesOrdenModal( 
+        @Param("id_venta") Integer id_venta, 
+        @Param("id_pc") Integer id_pc,  
+        @Param("idEquivalencia") Integer idEquivalencia, 
+        @Param("idSucursal") Integer idSucursal,
+        @Param("idLado") Integer idLado
+    
+    );
 
     @Query(value = "SELECT * FROM \"pos\".fn_eliminar_ingrediente_orden_produccion(:idSucursal, :id)", nativeQuery = true)
     List<Map<String, Object>> eliminarIngredienteOrden(@Param("idSucursal") Integer idSucursal, @Param("id") Integer id);
 
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_data_ingredientes_data_derecha(:idSucursal, :idEspecialidad)", nativeQuery = true)
-    List<Map<String, Object>> getDataIngredientesDataDerecha(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad") Integer idEspecialidad);
-
-    @Query(value = "SELECT * FROM \"controlinventarios\".fn_get_data_ingredientes_data_izquierda(:idSucursal, :idEspecialidad)", nativeQuery = true)
-    List<Map<String, Object>> getDataIngredientesDataIzquierda(@Param("idSucursal") Integer idSucursal, @Param("idEspecialidad") Integer idEspecialidad);
+    @Query(value = "SELECT * FROM \"pos\".fn_get_data_ingredientes_data(:idSucursal, :idVenta, :idPc, :idLado)", nativeQuery = true)
+    List<Map<String, Object>> getDataIngredientesData(
+        @Param("idSucursal") Integer idSucursal, 
+        @Param("idVenta") Integer idVenta,
+        @Param("idPc") Integer idPc,
+        @Param("idLado") Integer idLado
+    );
 
 
     @Query(value = "SELECT * FROM \"pos\".fn_get_eliminar_ingredientes_izquierda_derecha(:idSucursal, :idVenta, :idEspecialidad, :idLado, :idPc)", nativeQuery = true)
-    List<Map<String, Object>> eliminarIngredientesIzquierda(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("idEspecialidad") Integer idEspecialidad, @Param("idLado") Integer idLado, @Param("idPc") Integer idPc);
-
-    @Query(value = "SELECT * FROM \"pos\".fn_get_eliminar_ingredientes_izquierda_derecha(:idSucursal, :idVenta, :idEspecialidad, :idLado, :idPc)", nativeQuery = true)
-    List<Map<String, Object>> eliminarIngredientesDerecha(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("idEspecialidad") Integer idEspecialidad, @Param("idLado") Integer idLado, @Param("idPc") Integer idPc);
+    List<Map<String, Object>> eliminarIngredientesIzquierdaDerecha(@Param("idSucursal") Integer idSucursal, @Param("idVenta") Integer idVenta, @Param("idEspecialidad") Integer idEspecialidad, @Param("idLado") Integer idLado, @Param("idPc") Integer idPc);
 
     @Query(value = "SELECT * FROM \"pos\".fn_get_total_orden_produccion(:idSucursal, :id_venta, :id_pc, :id_tamano )", nativeQuery = true)
     List<Map<String, Object>> getTotalOrdenProduccion(

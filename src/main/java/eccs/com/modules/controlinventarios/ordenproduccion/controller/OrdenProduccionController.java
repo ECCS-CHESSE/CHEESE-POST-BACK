@@ -64,9 +64,9 @@ public class OrdenProduccionController {
         return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenDerecho(request));
     }
 
-    @PostMapping("/data/ingredientes/izquierdo")
+    @PostMapping("/data/ingredientes/modal")
     public ResponseEntity<ResponseDto<Object>> modal_catalogo_ingredientes_orden_produccion_izquierdo(@Valid @RequestBody ModalDataIngredientesDto request) {
-        return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenIzquierdo(request));
+        return ResponseEntity.ok(ordenProduccionService.getIngredientesOrdenModal(request));
     }
 
     @PostMapping("/eliminar/ingrediente")
@@ -74,24 +74,15 @@ public class OrdenProduccionController {
         return ResponseEntity.ok(ordenProduccionService.eliminarIngredienteOrden(request));
     }
 
-    @PostMapping("/data/ingredientes/data/derecha")
-    public ResponseEntity<ResponseDto<Object>> getDataIngredientesDataDerecha(@Valid @RequestBody DataIngredientesDerecharRequestDto request) {
-        return ResponseEntity.ok(ordenProduccionService.getDataIngredientesDataDerecha(request));
+    @PostMapping("/data/ingredientes/orden")
+    public ResponseEntity<ResponseDto<Object>> getDataIngredientesData(@Valid @RequestBody DataIngredientesDerecharRequestDto request) {
+        return ResponseEntity.ok(ordenProduccionService.getDataIngredientesData(request));
     }
 
-    @PostMapping("/data/ingredientes/data/izquierda")
-    public ResponseEntity<ResponseDto<Object>> getDataIngredientesDataIzquierda(@Valid @RequestBody DataIngredientesDerecharRequestDto request) {
-        return ResponseEntity.ok(ordenProduccionService.getDataIngredientesDataIzquierda(request));
-    }
-
-    @PostMapping("/limpiar/ingredientes/derecha")
-    public ResponseEntity<ResponseDto<Object>> eliminarIngredientesDerecha(@Valid @RequestBody EliminarIngredientesIzquierdaDerecharRequestDto request) {
-        return ResponseEntity.ok(ordenProduccionService.eliminarIngredientesDerecha(request));
-    }
-
-    @PostMapping("/limpiar/ingredientes/izquierda")
+   
+    @PostMapping("/limpiar/ingredientes/izquierdaderecha")
     public ResponseEntity<ResponseDto<Object>> eliminarIngredientesIzquierda(@Valid @RequestBody EliminarIngredientesIzquierdaDerecharRequestDto request) {
-        return ResponseEntity.ok(ordenProduccionService.eliminarIngredientesIzquierda(request));
+        return ResponseEntity.ok(ordenProduccionService.eliminarIngredientesDerecha(request));
     }
 
     @PostMapping("/total")

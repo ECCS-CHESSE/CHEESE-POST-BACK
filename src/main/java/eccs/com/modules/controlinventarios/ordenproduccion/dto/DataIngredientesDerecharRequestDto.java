@@ -6,5 +6,8 @@ import lombok.Data;
 @Data
 public class DataIngredientesDerecharRequestDto {
     @NotNull private Integer id_sucursal;
-    @NotNull private Integer id_especialidad;
+    @NotNull private Integer id_venta;
+    @NotNull private Integer id_pc;
+    @NotNull private Integer id_lado;
+
 }

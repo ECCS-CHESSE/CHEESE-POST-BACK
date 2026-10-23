@@ -23,12 +23,10 @@ public interface OrdenProduccionService {
     ResponseDto<Object> updateCategoriasArmaTuPizza(UpdateCategoriasArmaTuPizzaRequestDto request);
     ResponseDto<Object> agregarEspecificaciones(EspecificacionesOrdenRequestDto request);
     ResponseDto<Object> getIngredientesOrdenDerecho(ModalDataIngredientesDto request);
-    ResponseDto<Object> getIngredientesOrdenIzquierdo(ModalDataIngredientesDto request);
+    ResponseDto<Object> getIngredientesOrdenModal(ModalDataIngredientesDto request);
     ResponseDto<Object> eliminarIngredienteOrden(EliminarIngredienteOrdenRequestDto request);
-    ResponseDto<Object> getDataIngredientesDataDerecha(DataIngredientesDerecharRequestDto request);
-    ResponseDto<Object> getDataIngredientesDataIzquierda(DataIngredientesDerecharRequestDto request);
+    ResponseDto<Object> getDataIngredientesData(DataIngredientesDerecharRequestDto request);
     ResponseDto<Object> eliminarIngredientesDerecha(EliminarIngredientesIzquierdaDerecharRequestDto request);
-    ResponseDto<Object> eliminarIngredientesIzquierda(EliminarIngredientesIzquierdaDerecharRequestDto request);
     ResponseDto<Object> getTotalOrdenProduccion(TotalesOrdenRequestDto request);
     ResponseDto<Object> insertarIngrediente(InsertarIngredienteIzquierdoRequestDto request);
     ResponseDto<Object> insertarIngredienteDerecho(InsertarIngredienteDerechoRequestDto request);
