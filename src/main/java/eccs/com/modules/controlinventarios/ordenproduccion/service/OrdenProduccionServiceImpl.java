@@ -189,15 +189,16 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getIngredientesOrdenIzquierdo(ModalDataIngredientesDto request) {
+    public ResponseDto<Object> getIngredientesOrdenModal(ModalDataIngredientesDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getIngredientesOrdenIzquierdo(
+                ordenProduccionQuery.getIngredientesOrdenModal(
                     request.getId_venta(), 
                     request.getId_pc(),
                     request.getId_equivalencia(), 
-                    request.getId_sucursal()
+                    request.getId_sucursal(),
+                    request.getId_lado()
                 )
             );
             response.setSuccess(true);
@@ -234,31 +235,17 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
     }
 
     @Override
-    public ResponseDto<Object> getDataIngredientesDataDerecha(DataIngredientesDerecharRequestDto request) {
+    public ResponseDto<Object> getDataIngredientesData(DataIngredientesDerecharRequestDto request) {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getDataIngredientesDataDerecha(request.getId_sucursal(), request.getId_especialidad())
-            );
-            response.setSuccess(true);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
-            response.setMensaje("CONSULTA DE MANERA EXITOSA");
-            response.setResponse(result);
-        } catch (Exception e) {
-            response.setSuccess(false);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
-            response.setMensaje("Error: " + e.getMessage());
-            response.setResponse(null);
-        }
-        return response;
-    }
-
-    @Override
-    public ResponseDto<Object> getDataIngredientesDataIzquierda(DataIngredientesDerecharRequestDto request) {
-        ResponseDto<Object> response = new ResponseDto<>();
-        try {
-            Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.getDataIngredientesDataIzquierda(request.getId_sucursal(), request.getId_especialidad())
+                ordenProduccionQuery.getDataIngredientesData(
+                
+                    request.getId_sucursal(), 
+                    request.getId_venta(),
+                    request.getId_pc(),
+                    request.getId_lado()
+                )
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
@@ -278,27 +265,13 @@ public class OrdenProduccionServiceImpl implements OrdenProduccionService {
         ResponseDto<Object> response = new ResponseDto<>();
         try {
             Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.eliminarIngredientesDerecha(request.getId_sucursal(), request.getId_venta(), request.getId_especialidad(), request.getId_lado(), request.getId_pc())
-            );
-            response.setSuccess(true);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
-            response.setMensaje("INGREDIENTES ELIMINADOS DE MANERA EXITOSA");
-            response.setResponse(result);
-        } catch (Exception e) {
-            response.setSuccess(false);
-            response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
-            response.setMensaje("Error: " + e.getMessage());
-            response.setResponse(null);
-        }
-        return response;
-    }
-
-    @Override
-    public ResponseDto<Object> eliminarIngredientesIzquierda(EliminarIngredientesIzquierdaDerecharRequestDto request) {
-        ResponseDto<Object> response = new ResponseDto<>();
-        try {
-            Object result = jsonParserMiddleware.parseFunction(
-                ordenProduccionQuery.eliminarIngredientesIzquierda(request.getId_sucursal(), request.getId_venta(), request.getId_especialidad(), request.getId_lado(), request.getId_pc())
+                ordenProduccionQuery.eliminarIngredientesIzquierdaDerecha(
+                    request.getId_sucursal(), 
+                    request.getId_venta(), 
+                    request.getId_especialidad(), 
+                    request.getId_lado(), 
+                    request.getId_pc()
+                )
             );
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL INVENTARIOS - ORDEN PRODUCCION");
