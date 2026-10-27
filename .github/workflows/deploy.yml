@@ -44,6 +44,11 @@ jobs:
               curl -fsSL https://get.docker.com | sudo sh
             fi
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | sudo docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+            # Libera capas de despliegues anteriores antes de descargar la imagen nueva.
+            # No elimina imágenes usadas por contenedores ni volúmenes.
+            sudo docker image prune -f
+
             sudo docker pull corp69/cheese-pizza-post-back:latest
             sudo docker rm -f cheese-pizza-post-back 2>/dev/null || true
             sudo docker run -d \
@@ -51,4 +56,8 @@ jobs:
               -p 8080:8080 \
               --restart unless-stopped \
               corp69/cheese-pizza-post-back:latest
+
+            # Al actualizar `latest`, la imagen anterior queda sin etiqueta.
+            # Se limpia tras arrancar el contenedor nuevo para evitar acumulación.
+            sudo docker image prune -f
           EOF
