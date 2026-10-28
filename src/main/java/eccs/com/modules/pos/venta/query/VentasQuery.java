@@ -35,4 +35,13 @@ public interface VentasQuery extends JpaRepository<CortesEntity, Long> {
         @Param("id_tamano") Integer id_tamano
     );
 
+    @Query(value = "SELECT * FROM \"pos\".fn_insertar_en_comprobante_venta_info(:id_sucursal, :id_venta, :id_pc, :tamano, :id_empleado)", nativeQuery = true)
+    List<Map<String, Object>> insertarComprobanteVentaInfo(
+        @Param("id_sucursal") Integer id_sucursal,
+        @Param("id_venta") Integer id_venta,
+        @Param("id_pc") Integer id_pc,
+        @Param("tamano") Integer tamano,
+        @Param("id_empleado") Integer id_empleado
+    );
+
 }
