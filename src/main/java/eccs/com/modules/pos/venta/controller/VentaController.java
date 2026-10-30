@@ -1,6 +1,7 @@
 package eccs.com.modules.pos.venta.controller;
 
 import eccs.com.core.dtos.ResponseDto;
+import eccs.com.core.dtos.SucursalDto;
 import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
 import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
 import eccs.com.modules.pos.venta.dto.InsertarComprobanteVentaInfoRequestDto;
@@ -36,6 +37,11 @@ public class VentaController {
     @PostMapping("/venta/comprobante/info/insertar")
     public ResponseEntity<ResponseDto<Object>> insertarComprobanteVentaInfo(@Valid @RequestBody InsertarComprobanteVentaInfoRequestDto request) {
         return ResponseEntity.ok(VentasService.insertarComprobanteVentaInfo(request));
+    }
+  
+    @PostMapping("/lst/tiposventa")
+    public ResponseEntity<ResponseDto<Object>> getLstTiposVenta(@Valid @RequestBody SucursalDto request) {
+        return ResponseEntity.ok(VentasService.getLstTiposVenta(request));
     }
 
 }

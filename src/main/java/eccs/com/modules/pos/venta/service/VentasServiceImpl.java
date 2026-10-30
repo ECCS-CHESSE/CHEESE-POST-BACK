@@ -1,6 +1,7 @@
 package eccs.com.modules.pos.venta.service;
 
 import eccs.com.core.dtos.ResponseDto;
+import eccs.com.core.dtos.SucursalDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.pos.venta.dto.CrearVentaRequestDto;
 import eccs.com.modules.pos.venta.dto.DataVentaRequestDto;
@@ -106,6 +107,26 @@ public class VentasServiceImpl implements VentasService {
             response.setSuccess(true);
             response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
             response.setMensaje("Información del comprobante de venta insertada.");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> getLstTiposVenta(SucursalDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                VentasQuery.getLstTiposVenta(request.getId_sucursal())
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - CONTROL VENTAS - VENTA");
+            response.setMensaje("Lista de tipos de venta.");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);
