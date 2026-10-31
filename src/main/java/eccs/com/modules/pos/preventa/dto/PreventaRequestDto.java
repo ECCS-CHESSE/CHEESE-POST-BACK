@@ -1,4 +1,4 @@
-package eccs.com.modules.sistemapos.preventa.dto;
+package eccs.com.modules.pos.preventa.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

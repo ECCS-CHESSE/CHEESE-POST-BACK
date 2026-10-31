@@ -1,8 +1,9 @@
-package eccs.com.modules.sistemapos.preventa.controller;
+package eccs.com.modules.pos.preventa.controller;
 
 import eccs.com.core.dtos.ResponseDto;
-import eccs.com.modules.sistemapos.preventa.dto.PreventaRequestDto;
-import eccs.com.modules.sistemapos.preventa.service.PreventaService;
+import eccs.com.modules.pos.preventa.dto.IngredientesProduccionRequestDto;
+import eccs.com.modules.pos.preventa.dto.PreventaRequestDto;
+import eccs.com.modules.pos.preventa.service.PreventaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,5 +19,11 @@ public class PreventaController {
     @PostMapping("/precios/pizzas")
     public ResponseEntity<ResponseDto<Object>> getPreciosPizzas(@Valid @RequestBody PreventaRequestDto request) {
         return ResponseEntity.ok(preventaService.getPreciosPizzas(request));
+    }
+
+    @PostMapping("/data/ingredientes/produccion/info")
+    public ResponseEntity<ResponseDto<Object>> getDataIngredientesProduccionInfo(
+            @Valid @RequestBody IngredientesProduccionRequestDto request) {
+        return ResponseEntity.ok(preventaService.getDataIngredientesProduccionInfo(request));
     }
 }

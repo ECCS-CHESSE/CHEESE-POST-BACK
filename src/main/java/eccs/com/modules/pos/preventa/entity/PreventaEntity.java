@@ -1,4 +1,4 @@
-package eccs.com.modules.sistemapos.preventa.entity;
+package eccs.com.modules.pos.preventa.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
