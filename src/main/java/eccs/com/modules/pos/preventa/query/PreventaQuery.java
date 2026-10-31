@@ -22,4 +22,11 @@ public interface PreventaQuery extends JpaRepository<PreventaEntity, Long> {
         @Param("id_venta") Integer id_venta,
         @Param("id_especialidad") Integer id_especialidad
     );
+
+    @Query(value = "SELECT * FROM \"pos\".fn_get_eliminar_ingrediente_preventa(:idSucursal, :idVenta, :idEspecialidad)", nativeQuery = true)
+    List<Map<String, Object>> eliminarIngredientePreventa(
+        @Param("idSucursal") Integer idSucursal,
+        @Param("idVenta") Integer idVenta,
+        @Param("idEspecialidad") Integer idEspecialidad
+    );
 }

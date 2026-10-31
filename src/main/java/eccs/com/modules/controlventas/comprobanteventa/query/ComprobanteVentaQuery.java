@@ -26,7 +26,7 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("idComprobante")         Integer idComprobante
     );
  
-    @Query(value = "SELECT * FROM \"controlventas\".fn_eliminar_producto_comprobante_ventas_info(:idSucursal, :id )", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"pos\".fn_eliminar_producto_comprobante_ventas_info(:idSucursal, :id )", nativeQuery = true)
     List<Map<String, Object>> getEliminarProducto(
         @Param("idSucursal")         Integer idSucursal,
         @Param("id")         Integer id

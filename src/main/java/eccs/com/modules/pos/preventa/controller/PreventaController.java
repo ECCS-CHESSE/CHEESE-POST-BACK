@@ -1,6 +1,7 @@
 package eccs.com.modules.pos.preventa.controller;
 
 import eccs.com.core.dtos.ResponseDto;
+import eccs.com.modules.pos.preventa.dto.EliminarIngredientePreventaRequestDto;
 import eccs.com.modules.pos.preventa.dto.IngredientesProduccionRequestDto;
 import eccs.com.modules.pos.preventa.dto.PreventaRequestDto;
 import eccs.com.modules.pos.preventa.service.PreventaService;
@@ -25,5 +26,11 @@ public class PreventaController {
     public ResponseEntity<ResponseDto<Object>> getDataIngredientesProduccionInfo(
             @Valid @RequestBody IngredientesProduccionRequestDto request) {
         return ResponseEntity.ok(preventaService.getDataIngredientesProduccionInfo(request));
+    }
+
+    @PostMapping("/eliminar/ingrediente")
+    public ResponseEntity<ResponseDto<Object>> eliminarIngredientePreventa(
+            @Valid @RequestBody EliminarIngredientePreventaRequestDto request) {
+        return ResponseEntity.ok(preventaService.eliminarIngredientePreventa(request));
     }
 }
