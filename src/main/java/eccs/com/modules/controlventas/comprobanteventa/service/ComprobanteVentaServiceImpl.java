@@ -192,10 +192,39 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
         } catch (Exception e) {
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - ITEM AUMENTA");
-            response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
+
+            if (isForeignKeyViolation(e)) {
+                response.setMensaje(
+                    "No se puede asignar cantidad 0, por favor elimine."
+                );
+            } else {
+                response.setMensaje("Error: " + e.getMessage());
+            }
         }
         return response;
+    }
+
+    /**
+     * Detecta si la excepción (o alguna de sus causas) corresponde a una
+     * violación de llave foránea de PostgreSQL (SQLState 23503).
+     */
+    private boolean isForeignKeyViolation(Throwable e) {
+        Throwable cause = e;
+        while (cause != null) {
+            if (cause instanceof java.sql.SQLException sqlEx) {
+                if ("23503".equals(sqlEx.getSQLState())) {
+                    return true;
+                }
+            }
+            String msg = cause.getMessage();
+            if (msg != null && (msg.contains("foreign key constraint")
+                    || msg.contains("violates foreign key"))) {
+                return true;
+            }
+            cause = cause.getCause();
+        }
+        return false;
     }
 
     @Override
