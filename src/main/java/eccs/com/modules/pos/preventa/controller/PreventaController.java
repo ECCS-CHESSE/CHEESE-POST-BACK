@@ -4,6 +4,7 @@ import eccs.com.core.dtos.ResponseDto;
 import eccs.com.modules.pos.preventa.dto.EliminarIngredientePreventaRequestDto;
 import eccs.com.modules.pos.preventa.dto.IngredientesProduccionRequestDto;
 import eccs.com.modules.pos.preventa.dto.PreventaRequestDto;
+import eccs.com.modules.pos.preventa.dto.UpdateTipoVentaRequestDto;
 import eccs.com.modules.pos.preventa.service.PreventaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,11 @@ public class PreventaController {
     public ResponseEntity<ResponseDto<Object>> eliminarIngredientePreventa(
             @Valid @RequestBody EliminarIngredientePreventaRequestDto request) {
         return ResponseEntity.ok(preventaService.eliminarIngredientePreventa(request));
+    }
+
+    @PostMapping("/update/tipoventa")
+    public ResponseEntity<ResponseDto<Object>> updateTipoVenta(
+            @Valid @RequestBody UpdateTipoVentaRequestDto request) {
+        return ResponseEntity.ok(preventaService.updateTipoVenta(request));
     }
 }
