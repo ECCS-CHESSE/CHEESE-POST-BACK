@@ -346,6 +346,26 @@ Endpoint: `POST /eccs/v1/controlventas/comprobante/venta/create`
 
 ---
 
+### facturacion / factura
+
+Endpoint: `POST /eccs/v1/facturacion/factura/data`
+
+**Body:**
+```json
+{
+  "folio": 123,
+  "sucursal": "MATRIZ"
+}
+```
+
+**Función PostgreSQL:** `"facturacion".fn_get_data_factura(_folio, _sucursal)`
+
+**Notas:**
+- `folio` es entero y `sucursal` es texto.
+- Usa `jsonParserMiddleware.parseFunction(rows)`.
+
+---
+
 - Siempre `@Valid` en el controller
 - Siempre `@RequiredArgsConstructor` + `final` en lugar de `@Autowired`
 - El controller solo hace `ResponseEntity.ok(service.metodo())`, no construye nada

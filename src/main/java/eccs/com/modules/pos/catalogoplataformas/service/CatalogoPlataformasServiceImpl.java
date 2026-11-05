@@ -25,7 +25,7 @@ public class CatalogoPlataformasServiceImpl implements CatalogoPlataformasServic
             response.setTitulo("ECCS - POS - CATALOGO PLATAFORMAS");
             response.setMensaje("CONSULTA DE MANERA EXITOSA");
             response.setResponse(result);
-        } catch (Exception e) {
+        } catch (Exception e) { 
             response.setSuccess(false);
             response.setTitulo("ECCS - POS - CATALOGO PLATAFORMAS");
             response.setMensaje("Error: " + e.getMessage());

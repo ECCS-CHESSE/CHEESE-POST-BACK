@@ -11,20 +11,29 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
+    private static final List<String> PUBLIC_ROUTES = List.of(
+        //login
+        "/auth/login",
+        "/auth/checkAuthStatus",
+        "/controlsync/login",
+
+        //facturacion
+        "/facturacion/factura/data"
+
+        
+    );
+
     private final JwtUtil jwtUtil;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        String path = request.getRequestURI();
-        return path.endsWith("/auth/login") 
-        || path.endsWith("/auth/checkAuthStatus")
-        || path.endsWith("/controlsync/login");
-        
+        return PUBLIC_ROUTES.contains(request.getServletPath());
     }
 
     @Override
