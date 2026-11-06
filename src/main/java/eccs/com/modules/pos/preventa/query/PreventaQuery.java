@@ -29,4 +29,11 @@ public interface PreventaQuery extends JpaRepository<PreventaEntity, Long> {
         @Param("idVenta") Integer idVenta,
         @Param("idEspecialidad") Integer idEspecialidad
     );
+
+    @Query(value = "SELECT * FROM \"pos\".fn_update_tipo_venta(:idSucursal, :idVenta, :idTipoPedido)", nativeQuery = true)
+    List<Map<String, Object>> updateTipoVenta(
+        @Param("idSucursal") Integer idSucursal,
+        @Param("idVenta") Integer idVenta,
+        @Param("idTipoPedido") Integer idTipoPedido
+    );
 }
