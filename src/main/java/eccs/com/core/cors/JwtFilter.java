@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
+
     private static final List<String> PUBLIC_ROUTES = List.of(
         //login
         "/auth/login",
@@ -24,7 +27,9 @@ public class JwtFilter extends OncePerRequestFilter {
         "/controlsync/login",
 
         //facturacion
-        "/facturacion/factura/data"
+        "/facturacion/factura/data",
+        "/facturacion/comprobante/{id}",
+        "/facturacion/comprobante/cliente/{id}"
 
         
     );
@@ -33,7 +38,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return PUBLIC_ROUTES.contains(request.getServletPath());
+        return PUBLIC_ROUTES.stream()
+            .anyMatch(route -> PATH_MATCHER.match(route, request.getServletPath()));
     }
 
     @Override

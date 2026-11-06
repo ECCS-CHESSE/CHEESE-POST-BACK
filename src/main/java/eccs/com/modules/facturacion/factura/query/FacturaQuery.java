@@ -17,4 +17,14 @@ public interface FacturaQuery extends JpaRepository<FacturaEntity, Long> {
         @Param("folio") Integer folio,
         @Param("sucursal") String sucursal
     );
+
+    @Query(value = "SELECT * FROM \"facturacion\".fn_get_data_comprobante(:id)", nativeQuery = true)
+    List<Map<String, Object>> getDataComprobante(
+        @Param("id") Integer id
+    );
+
+    @Query(value = "SELECT * FROM \"facturacion\".fn_get_data_comprobante_cliente(:id)", nativeQuery = true)
+    List<Map<String, Object>> getDataComprobanteCliente(
+        @Param("id") Integer id
+    );
 }
