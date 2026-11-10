@@ -5,6 +5,7 @@ import eccs.com.core.middleware.JsonParserMiddleware;
 import eccs.com.modules.pos.preventa.dto.EliminarIngredientePreventaRequestDto;
 import eccs.com.modules.pos.preventa.dto.IngredientesProduccionRequestDto;
 import eccs.com.modules.pos.preventa.dto.PreventaRequestDto;
+import eccs.com.modules.pos.preventa.dto.UpdateProductoImagenRequestDto;
 import eccs.com.modules.pos.preventa.dto.UpdateTipoVentaRequestDto;
 import eccs.com.modules.pos.preventa.query.PreventaQuery;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,30 @@ public class PreventaServiceImpl implements PreventaService {
             response.setSuccess(true);
             response.setTitulo("ECCS - SISTEMA POS - PREVENTA");
             response.setMensaje("TIPO DE VENTA ACTUALIZADO DE MANERA EXITOSA");
+            response.setResponse(result);
+        } catch (Exception e) {
+            response.setSuccess(false);
+            response.setTitulo("ECCS - SISTEMA POS - PREVENTA");
+            response.setMensaje("Error: " + e.getMessage());
+            response.setResponse(null);
+        }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> updateProductoImagen(UpdateProductoImagenRequestDto request) {
+        ResponseDto<Object> response = new ResponseDto<>();
+        try {
+            Object result = jsonParserMiddleware.parseFunction(
+                preventaQuery.updateProductoImagen(
+                    request.getId_producto(),
+                    request.getId_sucursal(),
+                    request.getImagen()
+                )
+            );
+            response.setSuccess(true);
+            response.setTitulo("ECCS - SISTEMA POS - PREVENTA");
+            response.setMensaje("IMAGEN DEL PRODUCTO ACTUALIZADA DE MANERA EXITOSA");
             response.setResponse(result);
         } catch (Exception e) {
             response.setSuccess(false);
