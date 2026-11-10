@@ -39,7 +39,8 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/auth/login", 
                     "/controlsync/login", 
-                    "/auth/checkAuthStatus"
+                    "/auth/checkAuthStatus",
+                    "/facturacion/factura/data"
                 ).permitAll()
                 .anyRequest().permitAll()
             )
@@ -61,6 +62,7 @@ public class SecurityConfig {
         
         config.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:4200",
+            "http://localhost:42001",
             "http://eccs-cheese-pizza-front.s3-website.us-east-2.amazonaws.com",
             "http://localhost:3000",
             "http://localhost:[4200-4299]",
