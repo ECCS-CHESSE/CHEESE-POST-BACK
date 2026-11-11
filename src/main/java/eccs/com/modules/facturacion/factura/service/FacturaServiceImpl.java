@@ -2,6 +2,7 @@ package eccs.com.modules.facturacion.factura.service;
 
 import eccs.com.core.dtos.ResponseDto;
 import eccs.com.core.middleware.JsonParserMiddleware;
+import eccs.com.modules.facturacion.factura.dto.CrearClienteRequestDto;
 import eccs.com.modules.facturacion.factura.dto.FacturaRequestDto;
 import eccs.com.modules.facturacion.factura.query.FacturaQuery;
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,26 @@ public class FacturaServiceImpl implements FacturaService {
             response.setMensaje("Error: " + e.getMessage());
             response.setResponse(null);
         }
+        return response;
+    }
+
+    @Override
+    public ResponseDto<Object> crearCliente(CrearClienteRequestDto request) {
+        Object result = jsonParserMiddleware.parseFunction(
+            facturaQuery.crearCliente(
+                request.getId(),
+                request.getIdempleado(),
+                request.getNombre(),
+                request.getTelefono(),
+                request.getCodigopostal(),
+                request.getCorreo()
+            )
+        );
+        ResponseDto<Object> response = new ResponseDto<>();
+        response.setSuccess(true);
+        response.setTitulo("ECCS - FACTURACION - CLIENTE");
+        response.setMensaje("CLIENTE CREADO DE MANERA EXITOSA");
+        response.setResponse(result);
         return response;
     }
 }

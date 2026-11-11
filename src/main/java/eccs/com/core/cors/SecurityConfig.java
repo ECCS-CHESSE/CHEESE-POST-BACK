@@ -40,7 +40,7 @@ public class SecurityConfig {
                     "/auth/login", 
                     "/controlsync/login", 
                     "/auth/checkAuthStatus",
-                    "/facturacion/factura/data"
+                    "/facturacion/**"
                 ).permitAll()
                 .anyRequest().permitAll()
             )

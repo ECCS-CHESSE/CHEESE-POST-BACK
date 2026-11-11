@@ -1,6 +1,7 @@
 package eccs.com.modules.facturacion.factura.controller;
 
 import eccs.com.core.dtos.ResponseDto;
+import eccs.com.modules.facturacion.factura.dto.CrearClienteRequestDto;
 import eccs.com.modules.facturacion.factura.dto.FacturaRequestDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import eccs.com.modules.facturacion.factura.service.FacturaService;
@@ -32,5 +33,10 @@ public class FacturaController {
     @PostMapping("/comprobante/cliente/{id}")
     public ResponseEntity<ResponseDto<Object>> getDataComprobanteCliente(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(facturaService.getDataComprobanteCliente(id));
+    }
+
+    @PostMapping("/cliente/create")
+    public ResponseEntity<ResponseDto<Object>> crearCliente(@Valid @RequestBody CrearClienteRequestDto request) {
+        return ResponseEntity.ok(facturaService.crearCliente(request));
     }
 }

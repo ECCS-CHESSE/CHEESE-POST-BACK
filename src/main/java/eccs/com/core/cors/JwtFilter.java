@@ -27,11 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
         "/controlsync/login",
 
         //facturacion
-        "/facturacion/factura/data",
-        "/facturacion/comprobante/{id}",
-        "/facturacion/comprobante/cliente/{id}"
-
-        
+        "/facturacion/**"
     );
 
     private final JwtUtil jwtUtil;
