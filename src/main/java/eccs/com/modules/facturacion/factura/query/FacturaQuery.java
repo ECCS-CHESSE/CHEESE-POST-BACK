@@ -28,13 +28,16 @@ public interface FacturaQuery extends JpaRepository<FacturaEntity, Long> {
         @Param("id") Integer id
     );
 
-    @Query(value = "SELECT * FROM \"facturacion\".fn_create_eccs_cliente(:id, :idempleado, :nombre, :telefono, :codigopostal, :correo)", nativeQuery = true)
+    @Query(value = "SELECT * FROM \"facturacion\".fn_create_eccs_cliente(:id, :idempleado, :nombre, :rfc, :telefono, :codigopostal, :correo, :id_regimenfical, :id_uso_cfdi)", nativeQuery = true)
     List<Map<String, Object>> crearCliente(
         @Param("id") Integer id,
         @Param("idempleado") Integer idempleado,
         @Param("nombre") String nombre,
+        @Param("rfc") String rfc,
         @Param("telefono") Long telefono,
         @Param("codigopostal") String codigopostal,
-        @Param("correo") String correo
+        @Param("correo") String correo,
+        @Param("id_regimenfical") Integer id_regimenfical,
+        @Param("id_uso_cfdi") Integer id_uso_cfdi
     );
 }

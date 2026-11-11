@@ -16,6 +16,9 @@ public class CrearClienteRequestDto {
     @NotBlank(message = "nombre es requerido")
     private String nombre;
 
+    @NotBlank(message = "rfc es requerido")
+    private String rfc;
+
     @NotNull(message = "telefono es requerido")
     private Long telefono;
 
@@ -24,4 +27,10 @@ public class CrearClienteRequestDto {
 
     @NotBlank(message = "correo es requerido")
     private String correo;
+
+    @NotNull(message = "id_regimenfical es requerido")
+    private Integer id_regimenfical;
+
+    @NotNull(message = "id_uso_cfdi es requerido")
+    private Integer id_uso_cfdi;
 }

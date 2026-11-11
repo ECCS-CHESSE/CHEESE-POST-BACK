@@ -82,9 +82,12 @@ public class FacturaServiceImpl implements FacturaService {
                 request.getId(),
                 request.getIdempleado(),
                 request.getNombre(),
+                request.getRfc(),
                 request.getTelefono(),
                 request.getCodigopostal(),
-                request.getCorreo()
+                request.getCorreo(),
+                request.getId_regimenfical(),
+                request.getId_uso_cfdi()
             )
         );
         ResponseDto<Object> response = new ResponseDto<>();
