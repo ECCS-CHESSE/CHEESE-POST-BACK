@@ -119,27 +119,91 @@ class TimbrarControllerTest {
 
     @Test
     void devuelveErrorSiRigelRechazaLaPeticion() throws Exception {
-        doThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST))
+        doThrow(HttpClientErrorException.create(HttpStatus.BAD_REQUEST, "Bad Request",
+            org.springframework.http.HttpHeaders.EMPTY, "Factura invalida".getBytes(java.nio.charset.StandardCharsets.UTF_8),
+            java.nio.charset.StandardCharsets.UTF_8))
             .when(httpService).post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class));
 
         mockMvc.perform(post("/facturacion/timbrar/test")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id_comprobante_venta\":73}"))
-            .andExpect(status().isInternalServerError())
+            .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.success").value(false))
-            .andExpect(jsonPath("$.mensaje").value("Error interno: Rigel respondio con HTTP 400"));
+            .andExpect(jsonPath("$.mensaje").value("Rigel rechazo la peticion con HTTP 400"))
+            .andExpect(jsonPath("$.response").value("Factura invalida"));
+        verifyNoInteractions(comprobanteVentaQuery);
+    }
+
+    @Test
+    void devuelveJsonDeErrorDeRigelComoObjeto() throws Exception {
+        String respuestaRigel = "{\"success\":false,\"titulo\":\"Solicitud invalida\","
+            + "\"mensaje\":\"El comprobante contiene un timbre previo.\",\"response\":null}";
+        doThrow(HttpClientErrorException.create(HttpStatus.BAD_REQUEST, "Bad Request",
+            org.springframework.http.HttpHeaders.EMPTY, respuestaRigel.getBytes(java.nio.charset.StandardCharsets.UTF_8),
+            java.nio.charset.StandardCharsets.UTF_8))
+            .when(httpService).post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class));
+
+        mockMvc.perform(post("/facturacion/timbrar/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id_comprobante_venta\":73}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.response.success").value(false))
+            .andExpect(jsonPath("$.response.titulo").value("Solicitud invalida"))
+            .andExpect(jsonPath("$.response.mensaje").value("El comprobante contiene un timbre previo."))
+            .andExpect(jsonPath("$.response.response").isEmpty());
+
+        verifyNoInteractions(comprobanteVentaQuery);
     }
 
     @Test
     void noActualizaElComprobanteSiRigelNoConfirmaElTimbrado() throws Exception {
         when(httpService.post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class)))
-            .thenReturn(ResponseEntity.ok("{\"success\":false,\"response\":{}}"));
+            .thenReturn(ResponseEntity.ok("{\"success\":false,\"mensaje\":\"Factura invalida\","
+                + "\"response\":{\"detalle\":\"RFC invalido\"}}"));
 
         mockMvc.perform(post("/facturacion/timbrar/test")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id_comprobante_venta\":73}"))
-            .andExpect(status().isInternalServerError())
-            .andExpect(jsonPath("$.mensaje").value("Error interno: Rigel no confirmo el timbrado"));
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.mensaje").value("Factura invalida"))
+            .andExpect(jsonPath("$.response.success").value(false))
+            .andExpect(jsonPath("$.response.response.detalle").value("RFC invalido"));
+
+        verifyNoInteractions(comprobanteVentaQuery);
+    }
+
+    @Test
+    void devuelveDetalleCuandoTimbradoTieneCodigoDeError() throws Exception {
+        when(httpService.post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class)))
+            .thenReturn(ResponseEntity.ok("{\"success\":true,\"mensaje\":\"Operacion realizada\","
+                + "\"response\":{\"timbrado\":{\"code\":\"400\",\"message\":\"RFC invalido\"}}}"));
+
+        mockMvc.perform(post("/facturacion/timbrar/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id_comprobante_venta\":73}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.mensaje").value("RFC invalido"))
+            .andExpect(jsonPath("$.response.response.timbrado.code").value("400"))
+            .andExpect(jsonPath("$.response.response.timbrado.message").value("RFC invalido"));
+
+        verifyNoInteractions(comprobanteVentaQuery);
+    }
+
+    @Test
+    void devuelveError400SiRigelNoConfirmaElTimbrado() throws Exception {
+        when(httpService.post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class)))
+            .thenReturn(ResponseEntity.ok("{\"success\":true,\"response\":{}}"));
+
+        mockMvc.perform(post("/facturacion/timbrar/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id_comprobante_venta\":73}"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.success").value(false))
+            .andExpect(jsonPath("$.mensaje").value("Rigel no confirmo el timbrado"))
+            .andExpect(jsonPath("$.response.success").value(true));
 
         verifyNoInteractions(comprobanteVentaQuery);
     }

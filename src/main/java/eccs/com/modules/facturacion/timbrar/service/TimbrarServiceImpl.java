@@ -60,9 +60,21 @@ public class TimbrarServiceImpl implements TimbrarService {
                 request.getId_comprobante_venta(), rigelResponse.getBody());
             return rigelResponse;
         } catch (RestClientResponseException e) {
+            if (e.getStatusCode().value() == 400) {
+                throw new TimbradoRechazadoException(
+                    "Rigel rechazo la peticion con HTTP 400", leerRespuestaError(e.getResponseBodyAsString()));
+            }
             throw new IllegalStateException("Rigel respondio con HTTP " + e.getStatusCode().value(), e);
         } catch (RestClientException e) {
             throw new IllegalStateException("No fue posible completar la peticion a Rigel", e);
+        }
+    }
+
+    private Object leerRespuestaError(String body) {
+        try {
+            return objectMapper.readValue(body, Object.class);
+        } catch (JsonProcessingException e) {
+            return body;
         }
     }
 
@@ -96,6 +108,9 @@ public class TimbrarServiceImpl implements TimbrarService {
     }
 
     private void actualizarComprobante(Long idComprobante, String body) {
+        if (body == null || body.isBlank()) {
+            throw new IllegalStateException("Rigel devolvio una respuesta vacia");
+        }
         JsonNode root;
         try {
             root = objectMapper.readTree(body);
@@ -103,10 +118,12 @@ public class TimbrarServiceImpl implements TimbrarService {
             throw new IllegalStateException("Rigel devolvio una respuesta JSON invalida", e);
         }
 
-        JsonNode timbrado = root == null ? null : root.path("response").path("timbrado");
-        if (root == null || !root.path("success").asBoolean(false)
-            || !"200".equals(timbrado.path("code").asText())) {
-            throw new IllegalStateException("Rigel no confirmo el timbrado");
+        if (root == null || !root.isObject()) {
+            throw new IllegalStateException("Rigel devolvio una respuesta invalida");
+        }
+        JsonNode timbrado = root.path("response").path("timbrado");
+        if (!root.path("success").asBoolean(false) || !"200".equals(timbrado.path("code").asText())) {
+            throw rechazoTimbrado(root, timbrado);
         }
 
         Element timbreFiscal = obtenerTimbreFiscal(timbrado.path("data").path("XML").asText());
@@ -122,6 +139,16 @@ public class TimbrarServiceImpl implements TimbrarService {
         if (filasActualizadas != 1) {
             throw new IllegalStateException("No se encontró el comprobante de venta " + idComprobante);
         }
+    }
+
+    private TimbradoRechazadoException rechazoTimbrado(JsonNode root, JsonNode timbrado) {
+        JsonNode mensaje = timbrado.path("message");
+        if (!mensaje.isTextual() || mensaje.textValue().isBlank()) {
+            mensaje = root.path("mensaje");
+        }
+        String detalle = mensaje.isTextual() && !mensaje.textValue().isBlank()
+            ? mensaje.textValue() : "Rigel no confirmo el timbrado";
+        return new TimbradoRechazadoException(detalle, objectMapper.convertValue(root, Object.class));
     }
 
     private Element obtenerTimbreFiscal(String xml) {

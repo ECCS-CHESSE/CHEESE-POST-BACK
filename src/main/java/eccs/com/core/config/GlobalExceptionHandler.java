@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.Map;
 
 import eccs.com.core.dtos.ResponseDto;
+import eccs.com.modules.facturacion.timbrar.service.TimbradoRechazadoException;
 
 /**
  * Manejador global de excepciones para toda la aplicación
@@ -22,6 +23,18 @@ import eccs.com.core.dtos.ResponseDto;
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(TimbradoRechazadoException.class)
+    public ResponseEntity<ResponseDto<Object>> handleTimbradoRechazado(TimbradoRechazadoException ex) {
+        logger.warn("Rigel rechazo el timbrado: {}", ex.getMessage());
+
+        ResponseDto<Object> response = new ResponseDto<>();
+        response.setSuccess(false);
+        response.setTitulo("ECCS - FACTURACION - TIMBRAR");
+        response.setMensaje(ex.getMessage());
+        response.setResponse(ex.getRespuestaRigel());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
     /**
      * Maneja errores cuando el body del request está vacío o mal formado
