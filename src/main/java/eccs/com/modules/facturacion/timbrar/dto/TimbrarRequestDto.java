@@ -1,17 +1,12 @@
 package eccs.com.modules.facturacion.timbrar.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class TimbrarRequestDto {
 
-    @NotBlank(message = "api_key es requerida")
-    private String api_key;
+    @NotNull(message = "id_comprobante_venta es requerido")
+    private Long id_comprobante_venta;
 
-    @NotBlank(message = "usuario es requerido")
-    private String usuario;
-
-    @NotBlank(message = "jsonB64 es requerido")
-    private String jsonB64;
 }

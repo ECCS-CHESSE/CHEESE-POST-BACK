@@ -2,7 +2,6 @@ package eccs.com.core.services;
 
 import java.util.Map;
 
-import eccs.com.modules.facturacion.timbrar.dto.TimbrarRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -69,11 +68,9 @@ class HttpServiceTest {
     }
 
     @Test
-    void serializaElDtoDeTimbradoConSusNombresOriginales() {
-        TimbrarRequestDto request = new TimbrarRequestDto();
-        request.setApi_key("clave-prueba");
-        request.setUsuario("usuario-prueba");
-        request.setJsonB64("e30=");
+    void serializaLosDatosDeTimbradoConSusNombresOriginales() {
+        Map<String, String> request = Map.of(
+            "api_key", "clave-prueba", "usuario", "usuario-prueba", "jsonB64", "e30=");
         server.expect(requestTo("http://localhost:3000/facturacion/timbrarTest"))
             .andExpect(method(HttpMethod.POST))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))

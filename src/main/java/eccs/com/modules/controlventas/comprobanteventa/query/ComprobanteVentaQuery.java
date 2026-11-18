@@ -1,16 +1,39 @@
 package eccs.com.modules.controlventas.comprobanteventa.query;
 
 import eccs.com.modules.controlventas.comprobanteventa.entity.ComprobanteVentaEntity;
+import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Repository
 public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEntity, Long> {
+
+    @Modifying
+    @Transactional
+    @Query(value = """
+        UPDATE eccs_comprobante_venta
+        SET uuid = :uuid,
+            fecha_timbrado = :fechaTimbrado,
+            sellocfd = :selloCfd,
+            sellosat = :selloSat,
+            cadena_certificado_sat = :cadenaCertificadoSat
+        WHERE id = :id
+        """, nativeQuery = true)
+    int actualizarDatosTimbrado(
+        @Param("id") Long id,
+        @Param("uuid") String uuid,
+        @Param("fechaTimbrado") LocalDateTime fechaTimbrado,
+        @Param("selloCfd") String selloCfd,
+        @Param("selloSat") String selloSat,
+        @Param("cadenaCertificadoSat") String cadenaCertificadoSat
+    );
 
     @Query(value = "SELECT * FROM \"controlventas\".fn_create_comprobante_venta(:idSucursal, :idEmpleado, :idCliente, :idTipoComprobante)", nativeQuery = true)
     List<Map<String, Object>> createComprobanteVenta(

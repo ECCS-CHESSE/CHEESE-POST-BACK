@@ -12,6 +12,9 @@ import java.util.Map;
 @Repository
 public interface FacturaQuery extends JpaRepository<FacturaEntity, Long> {
 
+    @Query(value = "SELECT CAST(\"facturacion\".fn_timbrar_eccs(:id) AS text)", nativeQuery = true)
+    String getDatosTimbrado(@Param("id") Long id);
+
     @Query(value = "SELECT * FROM \"facturacion\".fn_get_data_factura(:folio, :sucursal)", nativeQuery = true)
     List<Map<String, Object>> getDataFactura(
         @Param("folio") Integer folio,
