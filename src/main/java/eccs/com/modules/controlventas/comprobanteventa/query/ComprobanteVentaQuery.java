@@ -23,7 +23,8 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
             fecha_timbrado = :fechaTimbrado,
             sellocfd = :selloCfd,
             sellosat = :selloSat,
-            cadena_certificado_sat = :cadenaCertificadoSat
+            cadena_certificado_sat = :cadenaCertificadoSat,
+            xml_cfdi = :xmlCfdi
         WHERE id = :id
         """, nativeQuery = true)
     int actualizarDatosTimbrado(
@@ -32,7 +33,8 @@ public interface ComprobanteVentaQuery extends JpaRepository<ComprobanteVentaEnt
         @Param("fechaTimbrado") LocalDateTime fechaTimbrado,
         @Param("selloCfd") String selloCfd,
         @Param("selloSat") String selloSat,
-        @Param("cadenaCertificadoSat") String cadenaCertificadoSat
+        @Param("cadenaCertificadoSat") String cadenaCertificadoSat,
+        @Param("xmlCfdi") String xmlCfdi
     );
 
     @Query(value = "SELECT * FROM \"controlventas\".fn_create_comprobante_venta(:idSucursal, :idEmpleado, :idCliente, :idTipoComprobante)", nativeQuery = true)

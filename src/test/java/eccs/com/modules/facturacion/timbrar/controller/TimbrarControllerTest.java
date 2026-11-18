@@ -75,7 +75,7 @@ class TimbrarControllerTest {
         when(comprobanteVentaQuery.actualizarDatosTimbrado(
             eq(ID_COMPROBANTE), eq("187f825a-465c-4d52-8550-80befc08c0a3"),
             eq(LocalDateTime.parse("2026-11-17T16:06:44")), eq("sello-cfd"), eq("sello-sat"),
-            eq("30001000000500003456")
+            eq("30001000000500003456"), eq(xml)
         )).thenReturn(1);
 
         mockMvc.perform(post("/facturacion/timbrar/test")
@@ -89,8 +89,22 @@ class TimbrarControllerTest {
         verify(httpService).post(RIGEL_URL, RIGEL_REQUEST, String.class);
         verify(comprobanteVentaQuery).actualizarDatosTimbrado(
             ID_COMPROBANTE, "187f825a-465c-4d52-8550-80befc08c0a3",
-            LocalDateTime.parse("2026-11-17T16:06:44"), "sello-cfd", "sello-sat", "30001000000500003456"
+            LocalDateTime.parse("2026-11-17T16:06:44"), "sello-cfd", "sello-sat", "30001000000500003456", xml
         );
+    }
+
+    @Test
+    void noActualizaElComprobanteSiRigelNoDevuelveElXml() throws Exception {
+        when(httpService.post(eq(RIGEL_URL), eq(RIGEL_REQUEST), eq(String.class)))
+            .thenReturn(ResponseEntity.ok("{\"success\":true,\"response\":{\"timbrado\":{\"code\":\"200\"}}}"));
+
+        mockMvc.perform(post("/facturacion/timbrar/test")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id_comprobante_venta\":73}"))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$.mensaje").value("Error interno: Rigel no devolvio el XML del comprobante timbrado"));
+
+        verifyNoInteractions(comprobanteVentaQuery);
     }
 
     @Test

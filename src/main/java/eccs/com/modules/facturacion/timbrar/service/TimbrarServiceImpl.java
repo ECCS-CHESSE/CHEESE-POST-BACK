@@ -126,7 +126,8 @@ public class TimbrarServiceImpl implements TimbrarService {
             throw rechazoTimbrado(root, timbrado);
         }
 
-        Element timbreFiscal = obtenerTimbreFiscal(timbrado.path("data").path("XML").asText());
+        String xml = timbrado.path("data").path("XML").asText();
+        Element timbreFiscal = obtenerTimbreFiscal(xml);
         String uuid = atributoRequerido(timbreFiscal, "UUID");
         LocalDateTime fechaTimbrado = LocalDateTime.parse(atributoRequerido(timbreFiscal, "FechaTimbrado"));
         String selloCfd = atributoRequerido(timbreFiscal, "SelloCFD");
@@ -134,7 +135,7 @@ public class TimbrarServiceImpl implements TimbrarService {
         String noCertificadoSat = atributoRequerido(timbreFiscal, "NoCertificadoSAT");
 
         int filasActualizadas = comprobanteVentaQuery.actualizarDatosTimbrado(
-            idComprobante, uuid, fechaTimbrado, selloCfd, selloSat, noCertificadoSat
+            idComprobante, uuid, fechaTimbrado, selloCfd, selloSat, noCertificadoSat, xml
         );
         if (filasActualizadas != 1) {
             throw new IllegalStateException("No se encontró el comprobante de venta " + idComprobante);
