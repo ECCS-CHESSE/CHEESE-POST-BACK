@@ -2,6 +2,7 @@ package eccs.com.core.services;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * Servicio para generación de reportes y respuestas estandarizadas
@@ -29,16 +31,16 @@ public class ResponseService {
 
 	/**
 	 * Genera un PDF desde un archivo JRXML codificado en Base64
-	 * @param JRXML - Plantilla JasperReports en Base64
+	 * @param jrxmlBase64 - Plantilla JasperReports en Base64
 	 * @param parameters - Parámetros para el reporte
 	 * @return byte[] - PDF generado
 	 */
-	public byte[] generatePdfFromJrxml(String JRXML, Map<String, Object> parameters) throws Exception {
-		byte[] jrxml = Base64.getDecoder().decode(JRXML);
-		JasperReport reportJrxml = JasperCompileManager.compileReport(new ByteArrayInputStream(jrxml));
+	public byte[] generatePdfFromJrxml(String jrxmlBase64, Map<String, Object> parameters) throws JRException, SQLException {
+		byte[] jrxml = Base64.getDecoder().decode(jrxmlBase64);
+		JasperReport report = JasperCompileManager.compileReport(new ByteArrayInputStream(jrxml));
 		
 		try (Connection connection = dataSource.getConnection()) {
-			JasperPrint jasperPrint = JasperFillManager.fillReport(reportJrxml, parameters, connection);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, connection);
 			return JasperExportManager.exportReportToPdf(jasperPrint);
 		}
 	}
