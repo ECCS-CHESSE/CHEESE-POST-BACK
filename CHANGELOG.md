@@ -4,6 +4,7 @@ Todos los cambios notables del proyecto ECCS serán documentados en este archivo
 
 ---
 
+
 ## [0.0.1-SNAPSHOT] - 2025-02-16
 
 ### 🎉 Inicial
