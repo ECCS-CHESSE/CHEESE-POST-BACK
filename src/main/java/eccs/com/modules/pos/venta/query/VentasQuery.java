@@ -49,6 +49,7 @@ public interface VentasQuery extends JpaRepository<CortesEntity, Long> {
                    "where id_eccs_sucursal = :id_eccs_sucursal " +
                    "and id_eccs_plataforma in (1,2,3,4) " +
                    "and activo is true " +
+                   "and is_preventa is true " +
                    "order by descripcion", nativeQuery = true)
     List<Map<String, Object>> getLstTiposVenta(
         @Param("id_eccs_sucursal") Integer id_eccs_sucursal
