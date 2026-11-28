@@ -10,11 +10,19 @@ import eccs.com.modules.controlventas.comprobanteventa.dto.ItemAumentaRequestDto
 import eccs.com.modules.controlventas.comprobanteventa.dto.UpdateClienteComprobanteVentaRequestDto;
 import eccs.com.modules.controlventas.comprobanteventa.query.ComprobanteVentaQuery;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.NestedExceptionUtils;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
+
+    // Texto del RAISE de fn_agregar_eccs_productos_pizzas_venta cuando no hay precio del producto.
+    private static final String ERROR_BD_SIN_PRECIO = "No se encontraron precios del producto";
+    private static final String MENSAJE_SIN_PRECIO =
+        "Este producto no tiene un precio configurado. Configura su precio en el catálogo e inténtalo de nuevo.";
 
     private final ComprobanteVentaQuery comprobanteVentaQuery;
     private final JsonParserMiddleware jsonParserMiddleware;
@@ -124,12 +132,35 @@ public class ComprobanteVentaServiceImpl implements ComprobanteVentaService {
             response.setMensaje("PRODUCTO AGREGADO DE MANERA EXITOSA");
             response.setResponse(result);
         } catch (Exception e) {
+            // La función de BD lanza un RAISE cuando el producto no tiene precio; se traduce a un mensaje claro.
+            String errorBd = mensajeBaseDatos(e);
+            boolean sinPrecio = errorBd.contains(ERROR_BD_SIN_PRECIO);
+
+            if (sinPrecio) {
+                log.warn("Producto sin precio configurado (venta {}, producto '{}', tamano '{}'): {}",
+                    request.getId_venta(), request.getProducto_descripcion(), request.getTamano(), errorBd);
+            }
+
             response.setSuccess(false);
             response.setTitulo("ECCS - CONTROL VENTAS - AGREGAR PRODUCTO");
-            response.setMensaje("Error: " + e.getMessage());
+            response.setMensaje(sinPrecio
+                ? MENSAJE_SIN_PRECIO
+                : "Error: " + e.getMessage());
             response.setResponse(null);
         }
         return response;
+    }
+
+    /**
+     * Obtiene el mensaje original de la base de datos (la causa más profunda) sin el encabezado "ERROR:"
+     * ni el detalle "Where:" de PL/pgSQL; solo la primera línea.
+     */
+    private String mensajeBaseDatos(Throwable e) {
+        String mensaje = NestedExceptionUtils.getMostSpecificCause(e).getMessage();
+        if (mensaje == null) return "";
+
+        String primeraLinea = mensaje.lines().findFirst().orElse("").trim();
+        return primeraLinea.startsWith("ERROR:") ? primeraLinea.substring(6).trim() : primeraLinea;
     }
 
     @Override
